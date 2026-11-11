@@ -5,7 +5,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/context/AuthContext';
-import { Mail, Lock, Eye, EyeOff, ArrowRight, AlertCircle, CheckCircle2, Shield, KeyRound } from 'lucide-react';
+import { Mail, Lock, Eye, EyeOff, ArrowRight, AlertCircle, Shield, KeyRound } from 'lucide-react';
 
 export default function LoginPage() {
   const router = useRouter();
@@ -34,11 +34,6 @@ export default function LoginPage() {
     } finally {
       setLoading(false);
     }
-  };
-
-  const handleQuickCustomer = () => {
-    setEmail('customer@gmail.com');
-    setPassword('CustomerPassword123!');
   };
 
   return (
@@ -83,7 +78,7 @@ export default function LoginPage() {
                   required
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  placeholder="e.g. customer@gmail.com"
+                  placeholder="Enter your email address"
                   className="w-full pl-10 pr-4 py-3 rounded-xl border border-forest-200 text-sm focus:outline-none focus:ring-2 focus:ring-forest-600 bg-cream-50/40"
                 />
               </div>
@@ -133,21 +128,6 @@ export default function LoginPage() {
               )}
             </button>
           </form>
-
-          {/* Quick Demo Credentials */}
-          <div className="mt-6 pt-5 border-t border-gray-100">
-            <span className="block text-[11px] font-bold uppercase tracking-wider text-gray-400 mb-2 text-center">
-              Quick Development Demo
-            </span>
-            <button
-              type="button"
-              onClick={handleQuickCustomer}
-              className="w-full py-2 px-3 rounded-lg bg-forest-50 text-forest-800 border border-forest-200 text-xs font-semibold hover:bg-forest-100 transition flex items-center justify-center gap-1.5"
-            >
-              <CheckCircle2 className="w-3.5 h-3.5 text-forest-600" />
-              Fill Sample Customer Credentials
-            </button>
-          </div>
 
           <div className="mt-6 text-center text-xs text-gray-600">
             Don&apos;t have an account yet?{' '}
