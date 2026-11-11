@@ -116,9 +116,9 @@ async function seedSupabase() {
   const testimonials = data.testimonials.map(t => ({
     id: t.id,
     customer_name: t.name,
-    role_location: t.role || 'Verified Customer',
+    role_location: t.roleOrTitle || t.role || t.location || 'Verified Customer',
     rating: t.rating || 5,
-    comment: t.comment,
+    comment: t.comment || t.content || 'Top quality agricultural produce and reliable delivery!',
     product_bought: t.product || 'Farm Products',
     is_active: t.isActive !== false
   }));
