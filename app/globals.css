@@ -1,0 +1,48 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --primary-forest: #0A3B1D;
+  --secondary-leaf: #16A34A;
+  --accent-gold: #F59E0B;
+  --bg-cream: #FAFBF8;
+}
+
+body {
+  background-color: #FAFBF8;
+  color: #1A2E20;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  overflow-x: hidden;
+}
+
+/* Custom agricultural styling */
+.hero-gradient {
+  background: linear-gradient(135deg, rgba(10, 59, 29, 0.95) 0%, rgba(15, 81, 40, 0.88) 100%);
+}
+
+.brand-pattern {
+  background-color: #0A3B1D;
+  background-image: radial-gradient(rgba(255, 255, 255, 0.08) 1px, transparent 0);
+  background-size: 24px 24px;
+}
+
+/* Custom scrollbars */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #F1F5E9;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #86EFAC;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #16A34A;
+}
+
