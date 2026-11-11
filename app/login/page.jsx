@@ -136,18 +136,12 @@ export default function LoginPage() {
             </Link>
           </div>
 
-          <div className="mt-4 pt-4 border-t border-gray-100 flex items-center justify-between text-xs">
-            <Link
-              href="/forgot-password"
-              className="font-bold text-forest-700 hover:text-gold-600 transition inline-flex items-center gap-1"
-            >
-              <KeyRound className="w-3.5 h-3.5" /> Reset Password
-            </Link>
+          <div className="mt-4 pt-4 border-t border-gray-100 flex items-center justify-center text-xs">
             <Link
               href="/admin/login"
-              className="inline-flex items-center gap-1.5 text-gray-500 hover:text-forest-800 transition"
+              className="inline-flex items-center gap-1.5 text-gray-400 hover:text-forest-800 transition"
             >
-              <Shield className="w-3.5 h-3.5" /> Staff / Admin
+              <Shield className="w-3.5 h-3.5" /> Staff / Admin Portal
             </Link>
           </div>
 
