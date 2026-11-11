@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import { db } from '@/lib/db';
-import { hashPassword } from '@/lib/auth';
+import { hashPassword, verifyPasswordResetToken } from '@/lib/auth';
 
 export async function POST(req) {
   try {
@@ -18,9 +18,17 @@ export async function POST(req) {
       return NextResponse.json({ error: 'Password must be at least 6 characters.' }, { status: 400 });
     }
 
-    const user = await db.users.findByEmail(email);
+    // Verify cryptographic token and 1-hour expiration
+    const decoded = verifyPasswordResetToken(token);
+    if (!decoded || decoded.email.toLowerCase() !== email.toLowerCase().trim()) {
+      return NextResponse.json({ 
+        error: 'This password reset link is invalid or has expired. Please request a new link.' 
+      }, { status: 400 });
+    }
+
+    const user = await db.users.findByEmail(email.toLowerCase().trim());
     if (!user) {
-      return NextResponse.json({ error: 'Invalid or expired reset token.' }, { status: 400 });
+      return NextResponse.json({ error: 'Account not found.' }, { status: 404 });
     }
 
     const passwordHash = await hashPassword(newPassword);
@@ -31,6 +39,7 @@ export async function POST(req) {
       message: 'Password reset successful! You can now log in with your new password.'
     });
   } catch (error) {
+    console.error('Reset password error:', error);
     return NextResponse.json({ error: 'Failed to reset password' }, { status: 500 });
   }
 }

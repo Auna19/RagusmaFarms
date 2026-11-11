@@ -8,7 +8,6 @@ import { Mail, ArrowRight, ArrowLeft, CheckCircle2, AlertCircle } from 'lucide-r
 export default function ForgotPasswordPage() {
   const [email, setEmail] = useState('');
   const [message, setMessage] = useState('');
-  const [devResetLink, setDevResetLink] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
 
@@ -16,7 +15,6 @@ export default function ForgotPasswordPage() {
     e.preventDefault();
     setError('');
     setMessage('');
-    setDevResetLink('');
     setLoading(true);
 
     try {
@@ -31,10 +29,7 @@ export default function ForgotPasswordPage() {
         throw new Error(data.error || 'Failed to submit request');
       }
 
-      setMessage(data.message);
-      if (data.devResetLink) {
-        setDevResetLink(data.devResetLink);
-      }
+      setMessage(data.message || 'If an account exists with this email address, a password reset link has been dispatched to your inbox.');
     } catch (err) {
       setError(err.message);
     } finally {
@@ -73,19 +68,14 @@ export default function ForgotPasswordPage() {
           )}
 
           {message && (
-            <div className="mb-5 p-4 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs font-medium space-y-3">
-              <div className="flex items-center gap-2">
-                <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
-                <span>{message}</span>
-              </div>
-              {devResetLink && (
-                <div className="p-3 bg-white rounded-lg border border-emerald-300">
-                  <span className="block font-bold text-gray-700 mb-1">Development Reset Link:</span>
-                  <Link href={devResetLink} className="text-forest-700 underline font-semibold break-all">
-                    Click here to reset your password
-                  </Link>
+            <div className="mb-5 p-4 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs font-medium space-y-2">
+              <div className="flex items-start gap-2">
+                <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
+                <div className="space-y-1">
+                  <p className="font-semibold text-emerald-900">{message}</p>
+                  <p className="text-[11px] text-emerald-700">Please check your inbox (and spam/junk folder) for the reset link. It will remain valid for 1 hour.</p>
                 </div>
-              )}
+              </div>
             </div>
           )}
 
@@ -99,7 +89,7 @@ export default function ForgotPasswordPage() {
                   required
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  placeholder="e.g. customer@gmail.com"
+                  placeholder="Enter your email address"
                   className="w-full pl-10 pr-4 py-3 rounded-xl border border-forest-200 text-sm focus:outline-none focus:ring-2 focus:ring-forest-600 bg-cream-50/40"
                 />
               </div>
