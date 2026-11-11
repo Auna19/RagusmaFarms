@@ -18,13 +18,13 @@ export async function POST(req) {
       return NextResponse.json({ error: 'Password must be at least 6 characters.' }, { status: 400 });
     }
 
-    const user = db.users.findByEmail(email);
+    const user = await db.users.findByEmail(email);
     if (!user) {
       return NextResponse.json({ error: 'Invalid or expired reset token.' }, { status: 400 });
     }
 
     const passwordHash = await hashPassword(newPassword);
-    db.users.update(user.id, { passwordHash });
+    await db.users.update(user.id, { passwordHash });
 
     return NextResponse.json({
       success: true,

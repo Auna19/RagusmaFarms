@@ -6,7 +6,7 @@ export async function GET(req) {
   try {
     const { searchParams } = new URL(req.url);
     const onlyActive = searchParams.get('all') !== 'true';
-    const locations = db.deliveryLocations.getAll(onlyActive);
+    const locations = await db.deliveryLocations.getAll(onlyActive);
 
     return NextResponse.json({
       success: true,
@@ -27,7 +27,7 @@ export async function POST(req) {
       return NextResponse.json({ error: 'Location name and charge are required.' }, { status: 400 });
     }
 
-    const created = db.deliveryLocations.create({
+    const created = await db.deliveryLocations.create({
       name,
       charge: Number(charge),
       description,

@@ -6,8 +6,8 @@ export async function GET(req) {
   try {
     requireAdmin(req);
 
-    const users = db.users.getAll();
-    const orders = db.orders.getAll();
+    const users = await db.users.getAll();
+    const orders = await db.orders.getAll();
 
     const customers = users
       .filter(u => u.role === 'customer')
@@ -45,7 +45,7 @@ export async function PATCH(req) {
     requireAdmin(req);
     const { userId, isActive } = await req.json();
 
-    const updated = db.users.update(userId, { isActive: Boolean(isActive) });
+    const updated = await db.users.update(userId, { isActive: Boolean(isActive) });
 
     return NextResponse.json({
       success: true,

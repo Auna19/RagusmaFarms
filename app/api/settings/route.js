@@ -5,7 +5,7 @@ import { requireAdmin, getCurrentUser } from '@/lib/auth';
 export async function GET(req) {
   try {
     const user = getCurrentUser(req);
-    const settings = db.settings.get();
+    const settings = await db.settings.get();
 
     // If user is not admin, sanitize secret keys
     if (!user || user.role !== 'admin') {
@@ -42,7 +42,7 @@ export async function PUT(req) {
     requireAdmin(req);
     const body = await req.json();
 
-    const updated = db.settings.update(body);
+    const updated = await db.settings.update(body);
 
     return NextResponse.json({
       success: true,

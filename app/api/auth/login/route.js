@@ -11,7 +11,7 @@ export async function POST(req) {
       return NextResponse.json({ error: 'Email and password are required.' }, { status: 400 });
     }
 
-    const user = db.users.findByEmail(email);
+    const user = await db.users.findByEmail(email);
     if (!user) {
       return NextResponse.json({ error: 'Invalid email address or password.' }, { status: 401 });
     }

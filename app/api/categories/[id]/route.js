@@ -8,12 +8,12 @@ export async function PUT(req, { params }) {
     const { id } = params;
     const body = await req.json();
 
-    const existing = db.categories.findById(id);
+    const existing = await db.categories.findById(id);
     if (!existing) {
       return NextResponse.json({ error: 'Category not found' }, { status: 404 });
     }
 
-    const updated = db.categories.update(id, body);
+    const updated = await db.categories.update(id, body);
 
     return NextResponse.json({
       success: true,
@@ -31,20 +31,20 @@ export async function DELETE(req, { params }) {
     requireAdmin(req);
     const { id } = params;
 
-    const existing = db.categories.findById(id);
+    const existing = await db.categories.findById(id);
     if (!existing) {
       return NextResponse.json({ error: 'Category not found' }, { status: 404 });
     }
 
     // Check if products exist in category
-    const prods = db.products.getAll({ categoryId: id });
+    const prods = await db.products.getAll({ categoryId: id });
     if (prods.length > 0) {
       return NextResponse.json({ 
         error: `Cannot delete category: ${prods.length} product(s) are assigned to it. Reassign or delete products first.` 
       }, { status: 400 });
     }
 
-    db.categories.delete(id);
+    await db.categories.delete(id);
 
     return NextResponse.json({
       success: true,

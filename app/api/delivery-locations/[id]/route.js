@@ -8,12 +8,12 @@ export async function PUT(req, { params }) {
     const { id } = params;
     const body = await req.json();
 
-    const existing = db.deliveryLocations.findById(id);
+    const existing = await db.deliveryLocations.findById(id);
     if (!existing) {
       return NextResponse.json({ error: 'Delivery location not found' }, { status: 404 });
     }
 
-    const updated = db.deliveryLocations.update(id, body);
+    const updated = await db.deliveryLocations.update(id, body);
 
     return NextResponse.json({
       success: true,
@@ -31,12 +31,12 @@ export async function DELETE(req, { params }) {
     requireAdmin(req);
     const { id } = params;
 
-    const existing = db.deliveryLocations.findById(id);
+    const existing = await db.deliveryLocations.findById(id);
     if (!existing) {
       return NextResponse.json({ error: 'Delivery location not found' }, { status: 404 });
     }
 
-    db.deliveryLocations.delete(id);
+    await db.deliveryLocations.delete(id);
 
     return NextResponse.json({
       success: true,

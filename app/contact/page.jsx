@@ -7,8 +7,8 @@ import { Phone, Mail, MapPin, Clock, MessageSquare, Send, Sparkles } from 'lucid
 
 export const revalidate = 0;
 
-export default function ContactPage() {
-  const content = db.content.get();
+export default async function ContactPage() {
+  const content = await db.content.get();
 
   return (
     <div className="min-h-screen flex flex-col bg-cream-50 text-forest-950">

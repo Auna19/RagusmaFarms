@@ -28,13 +28,13 @@ import {
 
 export const revalidate = 0; // ensure fresh data from db
 
-export default function HomePage() {
-  const content = db.content.get();
-  const settings = db.settings.get();
-  const categories = db.categories.getAll(true);
-  const featuredProducts = db.products.getAll({ onlyActive: true });
-  const deliveryLocations = db.deliveryLocations.getAll(true);
-  const testimonials = db.testimonials.getAll(true);
+export default async function HomePage() {
+  const content = await db.content.get();
+  const settings = await db.settings.get();
+  const categories = await db.categories.getAll(true);
+  const featuredProducts = await db.products.getAll({ onlyActive: true });
+  const deliveryLocations = await db.deliveryLocations.getAll(true);
+  const testimonials = await db.testimonials.getAll(true);
 
   return (
     <div className="min-h-screen flex flex-col bg-cream-50 text-forest-950">

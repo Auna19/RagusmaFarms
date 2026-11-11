@@ -9,8 +9,9 @@ export async function GET(req) {
       return NextResponse.json({ authenticated: false, user: null });
     }
 
-    const addresses = db.addresses.getByUserId(user.id);
-    const unreadNotifications = db.notifications.getByUserId(user.id).filter(n => !n.isRead).length;
+    const addresses = await db.addresses.getByUserId(user.id);
+    const userNotifications = await db.notifications.getByUserId(user.id);
+    const unreadNotifications = userNotifications.filter(n => !n.isRead).length;
 
     return NextResponse.json({
       authenticated: true,
@@ -35,7 +36,7 @@ export async function PUT(req) {
     const body = await req.json();
     const { fullName, phone } = body;
 
-    const updated = db.users.update(user.id, {
+    const updated = await db.users.update(user.id, {
       fullName: fullName || user.fullName,
       phone: phone !== undefined ? phone : user.phone
     });

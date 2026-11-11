@@ -8,7 +8,7 @@ export async function PUT(req, { params }) {
     const { id } = params;
     const body = await req.json();
 
-    const updated = db.testimonials.update(id, body);
+    const updated = await db.testimonials.update(id, body);
     if (!updated) {
       return NextResponse.json({ error: 'Testimonial not found' }, { status: 404 });
     }
@@ -29,7 +29,7 @@ export async function DELETE(req, { params }) {
     requireAdmin(req);
     const { id } = params;
 
-    db.testimonials.delete(id);
+    await db.testimonials.delete(id);
 
     return NextResponse.json({
       success: true,

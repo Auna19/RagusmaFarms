@@ -5,16 +5,16 @@ import { requireAdmin } from '@/lib/auth';
 export async function GET(req, { params }) {
   try {
     const { id } = params;
-    let product = db.products.findById(id);
+    let product = await db.products.findById(id);
     if (!product) {
-      product = db.products.findBySlug(id);
+      product = await db.products.findBySlug(id);
     }
 
     if (!product) {
       return NextResponse.json({ error: 'Product not found' }, { status: 404 });
     }
 
-    const category = db.categories.findById(product.categoryId);
+    const category = await db.categories.findById(product.categoryId);
 
     return NextResponse.json({
       success: true,
@@ -34,12 +34,12 @@ export async function PUT(req, { params }) {
     const { id } = params;
     const body = await req.json();
 
-    const existing = db.products.findById(id);
+    const existing = await db.products.findById(id);
     if (!existing) {
       return NextResponse.json({ error: 'Product not found' }, { status: 404 });
     }
 
-    const updated = db.products.update(id, body);
+    const updated = await db.products.update(id, body);
 
     return NextResponse.json({
       success: true,
@@ -57,12 +57,12 @@ export async function DELETE(req, { params }) {
     requireAdmin(req);
     const { id } = params;
 
-    const existing = db.products.findById(id);
+    const existing = await db.products.findById(id);
     if (!existing) {
       return NextResponse.json({ error: 'Product not found' }, { status: 404 });
     }
 
-    db.products.delete(id);
+    await db.products.delete(id);
 
     return NextResponse.json({
       success: true,

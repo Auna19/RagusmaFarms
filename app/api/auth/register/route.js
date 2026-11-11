@@ -25,13 +25,13 @@ export async function POST(req) {
     }
 
     // Check if user already exists
-    const existing = db.users.findByEmail(email);
+    const existing = await db.users.findByEmail(email);
     if (existing) {
       return NextResponse.json({ error: 'An account with this email address already exists.' }, { status: 409 });
     }
 
     const passwordHash = await hashPassword(password);
-    const user = db.users.create({
+    const user = await db.users.create({
       fullName,
       email,
       phone: phone || '',
@@ -42,7 +42,13 @@ export async function POST(req) {
     const token = signToken(user);
 
     // Send welcome notification
-    db.notifications.getByUserId(user.id);
+    await db.notifications.create({
+      userId: user.id,
+      title: 'Welcome to Ragusma Farms!',
+      message: `Hello ${user.fullName}, welcome to Ragusma Farms NG®. Explore our pasture-raised poultry, fish, rabbits, and organic produce!`,
+      type: 'welcome',
+      link: '/products'
+    });
 
     const response = NextResponse.json({
       success: true,

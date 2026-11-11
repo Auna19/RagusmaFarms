@@ -11,7 +11,7 @@ export async function GET(req) {
       return NextResponse.json({ error: 'Unauthorized admin access' }, { status: 403 });
     }
 
-    const admin = db.users.findById(user.id);
+    const admin = await db.users.findById(user.id);
     if (!admin) {
       return NextResponse.json({ error: 'Admin account not found' }, { status: 404 });
     }
@@ -47,7 +47,7 @@ export async function PUT(req) {
       return NextResponse.json({ error: 'Full name must be at least 2 characters.' }, { status: 400 });
     }
 
-    const updated = db.users.update(user.id, {
+    const updated = await db.users.update(user.id, {
       fullName: fullName.trim(),
       phone: phone ? phone.trim() : user.phone
     });

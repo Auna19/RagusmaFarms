@@ -10,7 +10,7 @@ export async function GET(req) {
     const search = searchParams.get('search');
     const includeOutOfStock = searchParams.get('includeOutOfStock') === 'true';
 
-    const products = db.products.getAll({
+    const products = await db.products.getAll({
       categoryId,
       featuredOnly,
       search,
@@ -50,7 +50,7 @@ export async function POST(req) {
       return NextResponse.json({ error: 'Product name, category, and price are required.' }, { status: 400 });
     }
 
-    const created = db.products.create({
+    const created = await db.products.create({
       name,
       categoryId,
       description,

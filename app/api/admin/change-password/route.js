@@ -26,7 +26,7 @@ export async function POST(req) {
     }
 
     // Verify current password
-    const adminUser = db.users.findByEmail(user.email);
+    const adminUser = await db.users.findByEmail(user.email);
     if (!adminUser) {
       return NextResponse.json({ error: 'Admin account not found' }, { status: 404 });
     }
@@ -38,7 +38,7 @@ export async function POST(req) {
 
     // Hash new password and update
     const newHash = await hashPassword(newPassword);
-    db.users.update(adminUser.id, {
+    await db.users.update(adminUser.id, {
       passwordHash: newHash
     });
 

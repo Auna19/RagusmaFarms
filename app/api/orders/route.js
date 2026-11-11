@@ -14,21 +14,20 @@ export async function GET(req) {
 
     let orders;
     if (user.role === 'admin') {
-      orders = db.orders.getAll({ status });
+      orders = await db.orders.getAll({ status });
     } else {
-      orders = db.orders.getAll({ customerId: user.id, status });
+      orders = await db.orders.getAll({ customerId: user.id, status });
     }
 
     // Attach brief items summary for list view
-    const allItems = db.orders.getAll(); // for each order we can attach item count
-    const enriched = orders.map(ord => {
-      const full = db.orders.findById(ord.id);
+    const enriched = await Promise.all(orders.map(async (ord) => {
+      const full = await db.orders.findById(ord.id);
       return {
         ...ord,
         itemsCount: full?.items?.length || 0,
         items: full?.items || []
       };
-    });
+    }));
 
     return NextResponse.json({
       success: true,
@@ -80,7 +79,7 @@ export async function POST(req) {
         return NextResponse.json({ error: 'Please enter a complete delivery address.' }, { status: 400 });
       }
 
-      const loc = db.deliveryLocations.findById(deliveryLocationId);
+      const loc = await db.deliveryLocations.findById(deliveryLocationId);
       if (!loc || !loc.isActive) {
         return NextResponse.json({ error: 'The selected delivery location is not available. Please contact farm support.' }, { status: 400 });
       }
@@ -90,7 +89,7 @@ export async function POST(req) {
     } else {
       // Pickup must strictly have 0 delivery fee
       verifiedDeliveryFee = 0;
-      const settings = db.settings.get();
+      const settings = await db.settings.get();
       verifiedLocationName = settings.farmPickupAddress || 'Farm Pickup';
     }
 
@@ -99,7 +98,7 @@ export async function POST(req) {
     const verifiedItems = [];
 
     for (const item of items) {
-      const product = db.products.findById(item.productId);
+      const product = await db.products.findById(item.productId);
       if (!product) {
         return NextResponse.json({ error: `Product not found: ${item.productName || item.productId}` }, { status: 400 });
       }
@@ -140,7 +139,7 @@ export async function POST(req) {
     const verifiedTotal = verifiedSubtotal + verifiedDeliveryFee;
 
     // Create the order
-    const createdOrder = db.orders.create({
+    const createdOrder = await db.orders.create({
       customerId: user.id,
       customerName: customerName || user.fullName,
       customerEmail: customerEmail || user.email,

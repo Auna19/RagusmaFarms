@@ -8,7 +8,7 @@ export async function POST(req) {
       return NextResponse.json({ error: 'Email is required' }, { status: 400 });
     }
 
-    const user = db.users.findByEmail(email);
+    const user = await db.users.findByEmail(email);
     // In production we send an email with a secure token; for development we generate and return the reset token directly
     if (!user) {
       // Don't reveal account absence for security, but return generic success

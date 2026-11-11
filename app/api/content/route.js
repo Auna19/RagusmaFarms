@@ -4,7 +4,7 @@ import { requireAdmin } from '@/lib/auth';
 
 export async function GET() {
   try {
-    const content = db.content.get();
+    const content = await db.content.get();
     return NextResponse.json({ success: true, content });
   } catch (error) {
     return NextResponse.json({ error: 'Failed to fetch content' }, { status: 500 });
@@ -16,7 +16,7 @@ export async function PUT(req) {
     requireAdmin(req);
     const body = await req.json();
 
-    const updated = db.content.update(body);
+    const updated = await db.content.update(body);
 
     return NextResponse.json({
       success: true,

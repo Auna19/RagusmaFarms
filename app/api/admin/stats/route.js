@@ -6,11 +6,11 @@ export async function GET(req) {
   try {
     requireAdmin(req);
 
-    const products = db.products.getAll();
-    const orders = db.orders.getAll();
-    const users = db.users.getAll();
-    const categories = db.categories.getAll();
-    const settings = db.settings.get();
+    const products = await db.products.getAll();
+    const orders = await db.orders.getAll();
+    const users = await db.users.getAll();
+    const categories = await db.categories.getAll();
+    const settings = await db.settings.get();
 
     const totalProducts = products.length;
     const activeProducts = products.filter(p => p.isAvailable && p.stock > 0).length;
@@ -40,10 +40,7 @@ export async function GET(req) {
     // Best selling products calculation
     const allItems = orders
       .filter(o => o.orderStatus !== 'Cancelled')
-      .flatMap(o => {
-        const full = db.orders.findById(o.id);
-        return full?.items || [];
-      });
+      .flatMap(o => o.items || []);
 
     const salesByProduct = {};
     allItems.forEach(item => {

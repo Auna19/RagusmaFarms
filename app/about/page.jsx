@@ -8,8 +8,8 @@ import { CheckCircle2, Award, Sparkles, HeartHandshake, Leaf, ArrowRight } from 
 
 export const revalidate = 0;
 
-export default function AboutPage() {
-  const content = db.content.get();
+export default async function AboutPage() {
+  const content = await db.content.get();
 
   return (
     <div className="min-h-screen flex flex-col bg-cream-50 text-forest-950">

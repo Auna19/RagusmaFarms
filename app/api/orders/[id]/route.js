@@ -10,7 +10,7 @@ export async function GET(req, { params }) {
     }
 
     const { id } = params;
-    const order = db.orders.findById(id);
+    const order = await db.orders.findById(id);
 
     if (!order) {
       return NextResponse.json({ error: 'Order not found' }, { status: 404 });
@@ -38,7 +38,7 @@ export async function PATCH(req, { params }) {
     }
 
     const { id } = params;
-    const order = db.orders.findById(id);
+    const order = await db.orders.findById(id);
 
     if (!order) {
       return NextResponse.json({ error: 'Order not found' }, { status: 404 });
@@ -53,7 +53,7 @@ export async function PATCH(req, { params }) {
         return NextResponse.json({ error: 'Unauthorized' }, { status: 403 });
       }
 
-      const cancelled = db.orders.cancelOrder(
+      const cancelled = await db.orders.cancelOrder(
         id,
         user.role === 'admin' ? `Admin (${user.fullName})` : `Customer (${user.fullName})`,
         note || 'Cancelled by user request.'
@@ -72,7 +72,7 @@ export async function PATCH(req, { params }) {
         return NextResponse.json({ error: 'Unauthorized' }, { status: 403 });
       }
 
-      const updated = db.orders.updatePaymentStatus(
+      const updated = await db.orders.updatePaymentStatus(
         id,
         paymentStatus || 'successful',
         paymentReference || 'VERIFIED-' + Date.now()
@@ -93,21 +93,21 @@ export async function PATCH(req, { params }) {
     let updatedOrder = order;
 
     if (status && status !== order.orderStatus) {
-      updatedOrder = db.orders.updateStatus(id, status, user.fullName, note);
+      updatedOrder = await db.orders.updateStatus(id, status, user.fullName, note);
     }
 
     if (paymentStatus && paymentStatus !== order.paymentStatus) {
-      updatedOrder = db.orders.updatePaymentStatus(id, paymentStatus, paymentReference);
+      updatedOrder = await db.orders.updatePaymentStatus(id, paymentStatus, paymentReference);
     }
 
     if (adminNotes !== undefined) {
-      updatedOrder = db.orders.addAdminNote(id, adminNotes);
+      updatedOrder = await db.orders.addAdminNote(id, adminNotes);
     }
 
     return NextResponse.json({
       success: true,
       message: 'Order updated successfully',
-      order: db.orders.findById(id)
+      order: await db.orders.findById(id)
     });
   } catch (error) {
     console.error('Update order error:', error);

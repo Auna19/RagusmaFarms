@@ -6,10 +6,10 @@ export async function GET(req) {
   try {
     const { searchParams } = new URL(req.url);
     const onlyActive = searchParams.get('onlyActive') === 'true';
-    const categories = db.categories.getAll(onlyActive);
+    const categories = await db.categories.getAll(onlyActive);
     
     // Add product counts for each category
-    const allProducts = db.products.getAll();
+    const allProducts = await db.products.getAll();
     const categoriesWithCount = categories.map(cat => ({
       ...cat,
       productCount: allProducts.filter(p => p.categoryId === cat.id).length
@@ -34,7 +34,7 @@ export async function POST(req) {
       return NextResponse.json({ error: 'Category name is required' }, { status: 400 });
     }
 
-    const created = db.categories.create({
+    const created = await db.categories.create({
       name,
       description,
       image,

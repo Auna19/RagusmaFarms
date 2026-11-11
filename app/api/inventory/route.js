@@ -8,9 +8,9 @@ export async function GET(req) {
     const { searchParams } = new URL(req.url);
     const productId = searchParams.get('productId');
 
-    const products = db.products.getAll();
-    const logs = db.inventory.getLogs(productId);
-    const settings = db.settings.get();
+    const products = await db.products.getAll();
+    const logs = await db.inventory.getLogs(productId);
+    const settings = await db.settings.get();
     const threshold = settings.lowStockThreshold || 10;
 
     const inventoryStatus = products.map(p => ({
@@ -44,7 +44,7 @@ export async function POST(req) {
       return NextResponse.json({ error: 'Product ID and new stock level are required' }, { status: 400 });
     }
 
-    const updated = db.products.update(productId, {
+    const updated = await db.products.update(productId, {
       stock: Number(newStock),
       stockReason: reason || 'manual_admin_adjustment',
       isAvailable: Number(newStock) > 0

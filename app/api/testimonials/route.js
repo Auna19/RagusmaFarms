@@ -6,7 +6,7 @@ export async function GET(req) {
   try {
     const { searchParams } = new URL(req.url);
     const all = searchParams.get('all') === 'true';
-    const testimonials = db.testimonials.getAll(!all);
+    const testimonials = await db.testimonials.getAll(!all);
     return NextResponse.json({ success: true, testimonials });
   } catch (error) {
     return NextResponse.json({ error: 'Failed to fetch testimonials' }, { status: 500 });
@@ -23,7 +23,7 @@ export async function POST(req) {
       return NextResponse.json({ error: 'Name and testimonial content are required' }, { status: 400 });
     }
 
-    const created = db.testimonials.create({
+    const created = await db.testimonials.create({
       name,
       roleOrTitle,
       content,

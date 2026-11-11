@@ -9,7 +9,7 @@ export async function GET(req) {
       return NextResponse.json({ error: 'Authentication required' }, { status: 401 });
     }
 
-    const notifications = db.notifications.getByUserId(user.id);
+    const notifications = await db.notifications.getByUserId(user.id);
     return NextResponse.json({ success: true, notifications });
   } catch (error) {
     return NextResponse.json({ error: 'Failed to fetch notifications' }, { status: 500 });
@@ -26,12 +26,12 @@ export async function PATCH(req) {
     const { id, markAll } = await req.json();
 
     if (markAll) {
-      db.notifications.markAllAsRead(user.id);
+      await db.notifications.markAllAsRead(user.id);
       return NextResponse.json({ success: true, message: 'All notifications marked as read' });
     }
 
     if (id) {
-      db.notifications.markAsRead(id);
+      await db.notifications.markAsRead(id);
       return NextResponse.json({ success: true, message: 'Notification marked as read' });
     }
 
