@@ -19,6 +19,10 @@ DROP TABLE IF EXISTS public.products CASCADE;
 DROP TABLE IF EXISTS public.delivery_locations CASCADE;
 DROP TABLE IF EXISTS public.categories CASCADE;
 DROP TABLE IF EXISTS public.testimonials CASCADE;
+DROP TABLE IF EXISTS public.addresses CASCADE;
+DROP TABLE IF EXISTS public.notifications CASCADE;
+DROP TABLE IF EXISTS public.website_content CASCADE;
+DROP TABLE IF EXISTS public.business_settings CASCADE;
 DROP TABLE IF EXISTS public.website_settings CASCADE;
 DROP TABLE IF EXISTS public.activity_logs CASCADE;
 DROP TABLE IF EXISTS public.users CASCADE;
@@ -279,24 +283,24 @@ CREATE POLICY "Public can view website content" ON public.website_content
 -- 2. Authenticated Customers can view their own orders & notifications
 CREATE POLICY "Customers can view own orders" ON public.orders
   FOR SELECT TO authenticated
-  USING ((select auth.uid()::text) = customer_id);
+  USING (customer_id::text = coalesce(auth.jwt() ->> 'sub', cast(auth.uid() as text)));
 
 CREATE POLICY "Customers can view own order items" ON public.order_items
   FOR SELECT TO authenticated
   USING (EXISTS (
     SELECT 1 FROM public.orders 
     WHERE orders.id = order_items.order_id 
-    AND orders.customer_id = (select auth.uid()::text)
+    AND orders.customer_id::text = coalesce(auth.jwt() ->> 'sub', cast(auth.uid() as text))
   ));
 
 CREATE POLICY "Customers can view own notifications" ON public.notifications
   FOR SELECT TO authenticated
-  USING ((select auth.uid()::text) = user_id OR user_id = 'all');
+  USING (user_id::text = coalesce(auth.jwt() ->> 'sub', cast(auth.uid() as text)) OR user_id = 'all');
 
 CREATE POLICY "Customers can manage own addresses" ON public.addresses
   FOR ALL TO authenticated
-  USING ((select auth.uid()::text) = user_id)
-  WITH CHECK ((select auth.uid()::text) = user_id);
+  USING (user_id::text = coalesce(auth.jwt() ->> 'sub', cast(auth.uid() as text)))
+  WITH CHECK (user_id::text = coalesce(auth.jwt() ->> 'sub', cast(auth.uid() as text)));
 
 -- 3. Service Role (Backend API) has full administrative access to all tables
 -- Note: In Supabase, the `service_role` automatically bypasses RLS by default.
