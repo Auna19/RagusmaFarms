@@ -8,3 +8,4 @@ export default function GlobalCartDrawer() {
   const { isDrawerOpen, closeDrawer } = useCart();
   return <CartDrawer isOpen={isDrawerOpen} onClose={closeDrawer} />;
 }
+
