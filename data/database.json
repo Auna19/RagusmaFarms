@@ -76,6 +76,17 @@
       "isActive": true,
       "createdAt": "2026-11-11T12:12:58.158Z",
       "updatedAt": "2026-11-11T12:12:58.158Z"
+    },
+    {
+      "id": "usr_1794401233034_ztgje",
+      "fullName": "Amina Mohammed",
+      "email": "newcustomer_1794401232809@example.com",
+      "phone": "+234 803 111 2233",
+      "passwordHash": "$2a$10$nSOI9cJ1RsuXQC6HMg0Oguh6wyNx4RCKMAohLCflNLKtdykn22L/y",
+      "role": "customer",
+      "isActive": true,
+      "createdAt": "2026-11-11T12:47:13.034Z",
+      "updatedAt": "2026-11-11T12:47:13.035Z"
     }
   ],
   "categories": [
@@ -150,7 +161,7 @@
       "price": 6500,
       "promotionalPrice": 6200,
       "unit": "per bird",
-      "stock": 258,
+      "stock": 305,
       "isAvailable": true,
       "isFeatured": true,
       "images": [
@@ -166,7 +177,7 @@
         "Origin": "Ragusma Farms, Minna"
       },
       "createdAt": "2026-11-11T11:10:07.796Z",
-      "updatedAt": "2026-11-11T12:12:58.239Z",
+      "updatedAt": "2026-11-11T12:47:13.268Z",
       "stockReason": "restock: Batch 24 Hatchery Delivery - 50 Healthy Birds"
     },
     {
@@ -228,7 +239,7 @@
       "price": 14000,
       "promotionalPrice": 13500,
       "unit": "per pair (1 buck + 1 doe)",
-      "stock": 19,
+      "stock": 18,
       "isAvailable": true,
       "isFeatured": true,
       "images": [
@@ -253,7 +264,7 @@
       "price": 3800,
       "promotionalPrice": null,
       "unit": "per kg (approx. 1-2 fish)",
-      "stock": 170,
+      "stock": 168,
       "isAvailable": true,
       "isFeatured": true,
       "images": [
@@ -387,6 +398,29 @@
       },
       "createdAt": "2026-11-11T12:12:58.247Z",
       "updatedAt": "2026-11-11T12:12:58.247Z"
+    },
+    {
+      "id": "prod_1794401233290",
+      "name": "Pure Farm-Fresh Quail Eggs (Crate of 30)",
+      "slug": "pure-farm-fresh-quail-eggs-crate-of-30--4tu3",
+      "categoryId": "cat_other",
+      "description": "Nutrient-rich, organic quail eggs harvested fresh daily from our specialized aviary unit.",
+      "price": 3200,
+      "promotionalPrice": 2900,
+      "unit": "per crate (30 eggs)",
+      "stock": 45,
+      "isAvailable": true,
+      "isFeatured": true,
+      "images": [
+        "/assets/brand-sheet.webp"
+      ],
+      "specifications": {
+        "Harvest": "Daily Sunrise Collection",
+        "Feed": "Organic Seed & Mineral Mash",
+        "Storage": "Cool dry conditions (up to 30 days)"
+      },
+      "createdAt": "2026-11-11T12:47:13.291Z",
+      "updatedAt": "2026-11-11T12:47:13.291Z"
     }
   ],
   "orders": [
@@ -743,6 +777,78 @@
       "adminNotes": "",
       "createdAt": "2026-11-11T12:12:58.196Z",
       "updatedAt": "2026-11-11T12:12:58.229Z"
+    },
+    {
+      "id": "ORD-812470",
+      "orderNumber": "ORD-812470",
+      "customerId": "usr_cust_001",
+      "customerName": "Ibrahim Sani",
+      "customerEmail": "customer@gmail.com",
+      "customerPhone": "+234 802 345 6789",
+      "deliveryMethod": "delivery",
+      "deliveryLocationId": "loc_tunga",
+      "deliveryLocationName": "Tunga",
+      "deliveryAddress": "No. 12 Bosu Street, Tunga",
+      "deliveryFee": 0,
+      "subtotal": 19500,
+      "totalAmount": 19500,
+      "paymentStatus": "pending",
+      "paymentMethod": "test_mode",
+      "paymentReference": "REF-1794401221166",
+      "orderStatus": "Processing",
+      "status": "Processing",
+      "customerNotes": "",
+      "adminNotes": "",
+      "createdAt": "2026-11-11T12:47:01.166Z",
+      "updatedAt": "2026-11-11T12:47:01.249Z"
+    },
+    {
+      "id": "ORD-504046",
+      "orderNumber": "ORD-504046",
+      "customerId": "usr_1794401233034_ztgje",
+      "customerName": "Amina Mohammed",
+      "customerEmail": "newcustomer_1794401232809@example.com",
+      "customerPhone": "+234 803 111 2233",
+      "deliveryMethod": "delivery",
+      "deliveryLocationId": "loc_tunga",
+      "deliveryLocationName": "Tunga (Free Delivery)",
+      "deliveryAddress": "House 14, Near Tunga Roundabout, Minna",
+      "deliveryFee": 0,
+      "subtotal": 7600,
+      "totalAmount": 7600,
+      "paymentStatus": "successful",
+      "paymentMethod": "test_mode",
+      "paymentReference": "REF-TUNGA-TEST",
+      "orderStatus": "Pending",
+      "status": "Pending",
+      "customerNotes": "",
+      "adminNotes": "",
+      "createdAt": "2026-11-11T12:47:13.062Z",
+      "updatedAt": "2026-11-11T12:47:13.062Z"
+    },
+    {
+      "id": "ORD-283605",
+      "orderNumber": "ORD-283605",
+      "customerId": "usr_1794401233034_ztgje",
+      "customerName": "Amina Mohammed",
+      "customerEmail": "newcustomer_1794401232809@example.com",
+      "customerPhone": "+234 803 111 2233",
+      "deliveryMethod": "delivery",
+      "deliveryLocationId": "loc_shango",
+      "deliveryLocationName": "Shango",
+      "deliveryAddress": "Plot 7, Shango New Layout, Minna",
+      "deliveryFee": 1000,
+      "subtotal": 14000,
+      "totalAmount": 15000,
+      "paymentStatus": "successful",
+      "paymentMethod": "bank_transfer",
+      "paymentReference": "REF-SHANGO-TEST",
+      "orderStatus": "delivered",
+      "status": "delivered",
+      "customerNotes": "",
+      "adminNotes": "",
+      "createdAt": "2026-11-11T12:47:13.159Z",
+      "updatedAt": "2026-11-11T12:47:13.235Z"
     }
   ],
   "orderItems": [
@@ -903,6 +1009,39 @@
     {
       "id": "item_ORD-206216_1",
       "orderId": "ORD-206216",
+      "productId": "prod_breeding_rabbit_pair",
+      "productName": "Healthy Farm Rabbits (Breeding Pair)",
+      "productUnit": "per pair (1 buck + 1 doe)",
+      "unitPrice": 14000,
+      "quantity": 1,
+      "subtotal": 14000,
+      "productImage": "/assets/live-chicken-pasture.webp"
+    },
+    {
+      "id": "item_ORD-812470_1",
+      "orderId": "ORD-812470",
+      "productId": "prod_live_broiler",
+      "productName": "Heavyweight Farm Broiler (Live Chicken)",
+      "productUnit": "per bird",
+      "unitPrice": 6500,
+      "quantity": 3,
+      "subtotal": 19500,
+      "productImage": "/assets/live-chicken-pasture.webp"
+    },
+    {
+      "id": "item_ORD-504046_1",
+      "orderId": "ORD-504046",
+      "productId": "prod_table_size_catfish",
+      "productName": "Fresh Table-Size Live Catfish",
+      "productUnit": "per kg (approx. 1-2 fish)",
+      "unitPrice": 3800,
+      "quantity": 2,
+      "subtotal": 7600,
+      "productImage": "/assets/live-chicken-pasture.webp"
+    },
+    {
+      "id": "item_ORD-283605_1",
+      "orderId": "ORD-283605",
       "productId": "prod_breeding_rabbit_pair",
       "productName": "Healthy Farm Rabbits (Breeding Pair)",
       "productUnit": "per pair (1 buck + 1 doe)",
@@ -1236,6 +1375,69 @@
       "changedBy": "Updated to delivered by Farm Dispatch Desk",
       "note": "Order status updated to delivered.",
       "createdAt": "2026-11-11T12:12:58.229Z"
+    },
+    {
+      "id": "hist_1794401221166",
+      "orderId": "ORD-812470",
+      "previousStatus": null,
+      "newStatus": "Pending",
+      "changedBy": "Ibrahim Sani",
+      "note": "Order successfully placed by customer.",
+      "createdAt": "2026-11-11T12:47:01.166Z"
+    },
+    {
+      "id": "hist_1794401221249_nev6",
+      "orderId": "ORD-812470",
+      "previousStatus": "Pending",
+      "newStatus": "Processing",
+      "changedBy": "Alhaji Madaki",
+      "note": "Birds prepared",
+      "createdAt": "2026-11-11T12:47:01.249Z"
+    },
+    {
+      "id": "hist_1794401233062",
+      "orderId": "ORD-504046",
+      "previousStatus": null,
+      "newStatus": "Pending",
+      "changedBy": "Amina Mohammed",
+      "note": "Order successfully placed by customer.",
+      "createdAt": "2026-11-11T12:47:13.062Z"
+    },
+    {
+      "id": "hist_1794401233159",
+      "orderId": "ORD-283605",
+      "previousStatus": null,
+      "newStatus": "Pending",
+      "changedBy": "Amina Mohammed",
+      "note": "Order successfully placed by customer.",
+      "createdAt": "2026-11-11T12:47:13.159Z"
+    },
+    {
+      "id": "hist_1794401233176_v032",
+      "orderId": "ORD-283605",
+      "previousStatus": "Pending",
+      "newStatus": "processing",
+      "changedBy": "Updated to processing by Farm Dispatch Desk",
+      "note": "Order status updated to processing.",
+      "createdAt": "2026-11-11T12:47:13.177Z"
+    },
+    {
+      "id": "hist_1794401233207_cbu7",
+      "orderId": "ORD-283605",
+      "previousStatus": "processing",
+      "newStatus": "out_for_delivery",
+      "changedBy": "Updated to out_for_delivery by Farm Dispatch Desk",
+      "note": "Order status updated to out_for_delivery.",
+      "createdAt": "2026-11-11T12:47:13.207Z"
+    },
+    {
+      "id": "hist_1794401233235_tu52",
+      "orderId": "ORD-283605",
+      "previousStatus": "out_for_delivery",
+      "newStatus": "delivered",
+      "changedBy": "Updated to delivered by Farm Dispatch Desk",
+      "note": "Order status updated to delivered.",
+      "createdAt": "2026-11-11T12:47:13.235Z"
     }
   ],
   "deliveryLocations": [
@@ -1505,6 +1707,56 @@
       "reason": "initial_stock",
       "referenceId": null,
       "createdAt": "2026-11-11T12:12:58.247Z"
+    },
+    {
+      "id": "inv_1794401221166_fhbq",
+      "productId": "prod_live_broiler",
+      "changeAmount": -3,
+      "previousStock": 258,
+      "newStock": 255,
+      "reason": "order_deduction",
+      "referenceId": "ORD-812470",
+      "createdAt": "2026-11-11T12:47:01.166Z"
+    },
+    {
+      "id": "inv_1794401233062_y0jr",
+      "productId": "prod_table_size_catfish",
+      "changeAmount": -2,
+      "previousStock": 170,
+      "newStock": 168,
+      "reason": "order_deduction",
+      "referenceId": "ORD-504046",
+      "createdAt": "2026-11-11T12:47:13.062Z"
+    },
+    {
+      "id": "inv_1794401233158_30c3",
+      "productId": "prod_breeding_rabbit_pair",
+      "changeAmount": -1,
+      "previousStock": 19,
+      "newStock": 18,
+      "reason": "order_deduction",
+      "referenceId": "ORD-283605",
+      "createdAt": "2026-11-11T12:47:13.158Z"
+    },
+    {
+      "id": "inv_1794401233268_9uns",
+      "productId": "prod_live_broiler",
+      "changeAmount": 50,
+      "previousStock": 255,
+      "newStock": 305,
+      "reason": "restock: Batch 24 Hatchery Delivery - 50 Healthy Birds",
+      "referenceId": null,
+      "createdAt": "2026-11-11T12:47:13.268Z"
+    },
+    {
+      "id": "inv_1794401233291",
+      "productId": "prod_1794401233290",
+      "changeAmount": 45,
+      "previousStock": 0,
+      "newStock": 45,
+      "reason": "initial_stock",
+      "referenceId": null,
+      "createdAt": "2026-11-11T12:47:13.291Z"
     }
   ],
   "notifications": [
@@ -1997,6 +2249,106 @@
       "isRead": false,
       "link": "/dashboard/orders/ORD-206216",
       "createdAt": "2026-11-11T12:12:58.229Z"
+    },
+    {
+      "id": "notif_1794401221166",
+      "userId": "usr_cust_001",
+      "title": "Order Placed Successfully! (ORD-812470)",
+      "message": "Your order of ₦19,500 has been received. Our farm team is reviewing it.",
+      "type": "order",
+      "isRead": false,
+      "link": "/dashboard/orders/ORD-812470",
+      "createdAt": "2026-11-11T12:47:01.230Z"
+    },
+    {
+      "id": "notif_admin_1794401221230",
+      "userId": "admin",
+      "title": "New Order Received (ORD-812470)",
+      "message": "Customer Ibrahim Sani placed an order for ₦19,500 (delivery).",
+      "type": "order",
+      "isRead": false,
+      "link": "/admin/orders/ORD-812470",
+      "createdAt": "2026-11-11T12:47:01.230Z"
+    },
+    {
+      "id": "notif_1794401221249_7iai",
+      "userId": "usr_cust_001",
+      "title": "Order Status Update: Processing",
+      "message": "Your order #ORD-812470 is now marked as \"Processing\". Note: Birds prepared",
+      "type": "status",
+      "isRead": false,
+      "link": "/dashboard/orders/ORD-812470",
+      "createdAt": "2026-11-11T12:47:01.249Z"
+    },
+    {
+      "id": "notif_1794401233062",
+      "userId": "usr_1794401233034_ztgje",
+      "title": "Order Placed Successfully! (ORD-504046)",
+      "message": "Your order of ₦7,600 has been received. Our farm team is reviewing it.",
+      "type": "order",
+      "isRead": false,
+      "link": "/dashboard/orders/ORD-504046",
+      "createdAt": "2026-11-11T12:47:13.127Z"
+    },
+    {
+      "id": "notif_admin_1794401233127",
+      "userId": "admin",
+      "title": "New Order Received (ORD-504046)",
+      "message": "Customer Amina Mohammed placed an order for ₦7,600 (delivery).",
+      "type": "order",
+      "isRead": false,
+      "link": "/admin/orders/ORD-504046",
+      "createdAt": "2026-11-11T12:47:13.127Z"
+    },
+    {
+      "id": "notif_1794401233159",
+      "userId": "usr_1794401233034_ztgje",
+      "title": "Order Placed Successfully! (ORD-283605)",
+      "message": "Your order of ₦15,000 has been received. Our farm team is reviewing it.",
+      "type": "order",
+      "isRead": false,
+      "link": "/dashboard/orders/ORD-283605",
+      "createdAt": "2026-11-11T12:47:13.159Z"
+    },
+    {
+      "id": "notif_admin_1794401233159",
+      "userId": "admin",
+      "title": "New Order Received (ORD-283605)",
+      "message": "Customer Amina Mohammed placed an order for ₦15,000 (delivery).",
+      "type": "order",
+      "isRead": false,
+      "link": "/admin/orders/ORD-283605",
+      "createdAt": "2026-11-11T12:47:13.159Z"
+    },
+    {
+      "id": "notif_1794401233177_na67",
+      "userId": "usr_1794401233034_ztgje",
+      "title": "Order Status Update: processing",
+      "message": "Your order #ORD-283605 is now marked as \"processing\". ",
+      "type": "status",
+      "isRead": false,
+      "link": "/dashboard/orders/ORD-283605",
+      "createdAt": "2026-11-11T12:47:13.177Z"
+    },
+    {
+      "id": "notif_1794401233207_db6w",
+      "userId": "usr_1794401233034_ztgje",
+      "title": "Order Status Update: out_for_delivery",
+      "message": "Your order #ORD-283605 is now marked as \"out_for_delivery\". ",
+      "type": "status",
+      "isRead": false,
+      "link": "/dashboard/orders/ORD-283605",
+      "createdAt": "2026-11-11T12:47:13.207Z"
+    },
+    {
+      "id": "notif_1794401233235_554i",
+      "userId": "usr_1794401233034_ztgje",
+      "title": "Order Status Update: delivered",
+      "message": "Your order #ORD-283605 is now marked as \"delivered\". ",
+      "type": "status",
+      "isRead": false,
+      "link": "/dashboard/orders/ORD-283605",
+      "createdAt": "2026-11-11T12:47:13.235Z"
     }
   ],
   "testimonials": [

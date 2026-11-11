@@ -1,6 +1,7 @@
 import './globals.css';
 import { AuthProvider } from '@/context/AuthContext';
 import { CartProvider } from '@/context/CartContext';
+import GlobalCartDrawer from '@/components/GlobalCartDrawer';
 
 export const metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'),
@@ -30,6 +31,7 @@ export default function RootLayout({ children }) {
         <AuthProvider>
           <CartProvider>
             {children}
+            <GlobalCartDrawer />
           </CartProvider>
         </AuthProvider>
       </body>

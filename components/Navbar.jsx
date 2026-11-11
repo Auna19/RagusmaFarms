@@ -270,6 +270,19 @@ export default function Navbar() {
                 {link.name}
               </Link>
             ))}
+            <Link
+              href="/cart"
+              onClick={() => setIsOpen(false)}
+              className="px-3 py-2.5 rounded-lg text-base font-semibold text-forest-900 bg-forest-50/80 flex items-center justify-between"
+            >
+              <span className="flex items-center gap-2">
+                <ShoppingBag className="w-5 h-5 text-forest-700" />
+                Shopping Basket
+              </span>
+              <span className="bg-gold-500 text-forest-950 text-xs font-bold px-2 py-0.5 rounded-full">
+                {cartCount}
+              </span>
+            </Link>
           </div>
 
           <div className="border-t border-gray-100 pt-3">
@@ -313,9 +326,6 @@ export default function Navbar() {
           </div>
         </div>
       )}
-
-      {/* Cart Drawer */}
-      <CartDrawer isOpen={isDrawerOpen} onClose={closeDrawer} />
     </header>
   );
 }

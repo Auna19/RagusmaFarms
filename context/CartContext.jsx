@@ -90,6 +90,10 @@ export function CartProvider({ children }) {
       }
     });
 
+    if (added) {
+      setIsDrawerOpen(true);
+    }
+
     return { success: added, message };
   };
 
