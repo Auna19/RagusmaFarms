@@ -60,7 +60,7 @@ export function AuthProvider({ children }) {
     return data;
   };
 
-  const logout = async () => {
+  const logout = async (targetRedirect = '/login') => {
     try {
       await fetch('/api/auth/logout', { method: 'POST' });
     } catch (err) {
@@ -68,7 +68,8 @@ export function AuthProvider({ children }) {
     }
     setUser(null);
     toast.info('You have logged out successfully.', 'Signed Out');
-    router.push('/login');
+    router.push(targetRedirect);
+    router.refresh();
   };
 
   return (

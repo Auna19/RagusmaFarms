@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
@@ -19,13 +19,27 @@ export default function AdminLoginPage() {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
 
+  // Clear credentials whenever the admin login page mounts or is navigated to
+  useEffect(() => {
+    setEmail('');
+    setPassword('');
+    setError('');
+  }, []);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
     setLoading(true);
 
+    const submitEmail = email.trim();
+    const submitPassword = password;
+
     try {
-      const data = await login(email, password, 'admin');
+      const data = await login(submitEmail, submitPassword, 'admin');
+      // Immediately clear credentials from memory
+      setEmail('');
+      setPassword('');
+
       toast.success('Admin authentication successful. Welcome back!', 'Access Granted');
       router.push(data.redirectTo || '/admin/dashboard');
     } catch (err) {
@@ -33,11 +47,6 @@ export default function AdminLoginPage() {
     } finally {
       setLoading(false);
     }
-  };
-
-  const handleQuickAdmin = () => {
-    setEmail('admin@ragusmafarms.com');
-    setPassword('AdminPassword2026!');
   };
 
   return (
@@ -73,13 +82,19 @@ export default function AdminLoginPage() {
             </div>
           )}
 
-          <form className="space-y-4" onSubmit={handleSubmit}>
+          <form className="space-y-4" onSubmit={handleSubmit} autoComplete="off">
+            {/* Hidden anti-autofill trap for modern browsers */}
+            <input type="text" name="fake_admin_email" style={{ display: 'none' }} tabIndex="-1" autoComplete="off" />
+            <input type="password" name="fake_admin_pwd" style={{ display: 'none' }} tabIndex="-1" autoComplete="new-password" />
+
             <div>
               <label className="block text-xs font-semibold text-forest-200 mb-1">Administrative Email</label>
               <div className="relative">
                 <Mail className="w-4 h-4 text-forest-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
                 <input
                   type="email"
+                  name="admin_login_email"
+                  autoComplete="off"
                   required
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
@@ -103,6 +118,8 @@ export default function AdminLoginPage() {
                 <Lock className="w-4 h-4 text-forest-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
                 <input
                   type={showPassword ? 'text' : 'password'}
+                  name="admin_login_password"
+                  autoComplete="new-password"
                   required
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
@@ -133,21 +150,6 @@ export default function AdminLoginPage() {
               )}
             </button>
           </form>
-
-          {/* Quick Admin Test Button */}
-          <div className="mt-6 pt-5 border-t border-forest-800">
-            <span className="block text-[11px] font-bold uppercase tracking-wider text-forest-400 mb-2 text-center">
-              Quick Admin Credentials
-            </span>
-            <button
-              type="button"
-              onClick={handleQuickAdmin}
-              className="w-full py-2.5 px-3 rounded-xl bg-forest-800/80 text-gold-300 border border-forest-700 text-xs font-semibold hover:bg-forest-800 transition flex items-center justify-center gap-2"
-            >
-              <KeyRound className="w-4 h-4 text-gold-400" />
-              Fill Admin Credentials (Alhaji Madaki)
-            </button>
-          </div>
 
           <div className="mt-6 text-center text-xs text-forest-400">
             Not an administrator?{' '}

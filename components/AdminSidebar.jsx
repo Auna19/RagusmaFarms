@@ -120,7 +120,7 @@ export default function AdminSidebar() {
           <ExternalLink className="w-3.5 h-3.5" /> View Public Farm Website
         </Link>
         <button
-          onClick={logout}
+          onClick={() => logout('/admin/login')}
           className="w-full flex items-center justify-center gap-2 px-4 py-2.5 text-xs font-bold text-white bg-rose-700 hover:bg-rose-600 rounded-xl shadow-md transition"
         >
           <LogOut className="w-4 h-4" /> Sign Out Admin

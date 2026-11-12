@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
@@ -19,13 +19,27 @@ export default function LoginPage() {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
 
+  // Clear credentials whenever the login page is navigated to or mounted
+  useEffect(() => {
+    setEmail('');
+    setPassword('');
+    setError('');
+  }, []);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
     setLoading(true);
 
+    const submitEmail = email.trim();
+    const submitPassword = password;
+
     try {
-      const data = await login(email, password);
+      const data = await login(submitEmail, submitPassword);
+      // Immediately clear credentials from memory
+      setEmail('');
+      setPassword('');
+
       toast.success(
         `Welcome back${data.user?.fullName ? ', ' + data.user.fullName : ''}! Signed in successfully.`,
         'Signed In'
@@ -74,13 +88,19 @@ export default function LoginPage() {
             </div>
           )}
 
-          <form className="space-y-4" onSubmit={handleSubmit}>
+          <form className="space-y-4" onSubmit={handleSubmit} autoComplete="off">
+            {/* Hidden anti-autofill trap for modern browsers */}
+            <input type="text" name="fake_email" style={{ display: 'none' }} tabIndex="-1" autoComplete="off" />
+            <input type="password" name="fake_password" style={{ display: 'none' }} tabIndex="-1" autoComplete="new-password" />
+
             <div>
               <label className="block text-xs font-semibold text-gray-700 mb-1">Email Address</label>
               <div className="relative">
                 <Mail className="w-4 h-4 text-gray-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
                 <input
                   type="email"
+                  name="customer_login_email"
+                  autoComplete="off"
                   required
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
@@ -104,6 +124,8 @@ export default function LoginPage() {
                 <Lock className="w-4 h-4 text-gray-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
                 <input
                   type={showPassword ? 'text' : 'password'}
+                  name="customer_login_password"
+                  autoComplete="new-password"
                   required
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
