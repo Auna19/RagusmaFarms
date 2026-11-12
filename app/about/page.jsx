@@ -52,7 +52,7 @@ export default async function AboutPage() {
                   &quot;Access to Food is a right, not a privilege.&quot;
                 </blockquote>
                 <p className="text-xs text-forest-300 mt-2 font-medium">
-                  — Hajiya Ramatu Mallam Madaki (Founder, 2015)
+                  — Hajiya Ramatu Mallama Madaki (Founder, 2015)
                 </p>
               </div>
             </div>
@@ -70,7 +70,7 @@ export default async function AboutPage() {
               <div className="grid grid-cols-2 gap-4">
                 <div className="p-5 rounded-2xl bg-forest-50 border border-forest-100">
                   <h4 className="font-bold text-gray-900 text-sm">Founded in 2015</h4>
-                  <p className="text-xs text-gray-500 mt-1">Established by Hajiya Ramatu Mallam Madaki with a vision for organic poultry.</p>
+                  <p className="text-xs text-gray-500 mt-1">Established by Hajiya Ramatu Mallama Madaki with a vision for organic poultry.</p>
                 </div>
                 <div className="p-5 rounded-2xl bg-forest-50 border border-forest-100">
                   <h4 className="font-bold text-gray-900 text-sm">Co-Managed Since 2022</h4>

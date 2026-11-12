@@ -1,7 +1,7 @@
 # 🌾 Ragusma Farms NG® – Full-Stack Agricultural E-Commerce Web Application
 
 > **"At the very heart of agriculture is the drive to feed the world."**  
-> *"Access to Food is a right, not a privilege."* — **Hajiya Ramatu Mallam Madaki** *(Founder, 2015) & **Madaki Brothers** (Management since 2022)*
+> *"Access to Food is a right, not a privilege."* — **Hajiya Ramatu Mallama Madaki** *(Founder, 2015) & **Madaki Brothers** (Management since 2022)*
 
 A modern, responsive, and full-stack agricultural e-commerce web platform engineered in pure **JavaScript (ES6+ / React JSX)** for **Ragusma Farms**, an agricultural and livestock business selling healthy farm-raised live & frozen chicken, farm rabbits, fresh catfish, organic manure, and agricultural consultation services.
 
@@ -46,7 +46,7 @@ A modern, responsive, and full-stack agricultural e-commerce web platform engine
 - **Responsive Header & Nav**: Full brand logo (edge-to-edge `object-cover`), announcement bar highlighting free delivery in Tunga, live basket counter, customer and admin links.
 - **Hero Section**: Authentic pasture photography (`/assets/live-chicken-pasture.webp`), call-to-actions, and official brand guarantee badge.
 - **Meet the CEO Section**: Dedicated leadership profile featuring the CEO in the field (`Meet the CEO.webp`), biographical context on two generations of agricultural experience, official quotes, direct Instagram link (`@ragusmafarmsng`), and one-click WhatsApp inquiry.
-- **About Us & Heritage**: History of the farm from founding by Hajiya Ramatu Mallam Madaki in 2015 to modern co-management by the Madaki brothers.
+- **About Us & Heritage**: History of the farm from founding by Hajiya Ramatu Mallama Madaki in 2015 to modern co-management by the Madaki brothers.
 - **Dynamic Catalogue**: Filter by category (Live Chicken, Frozen Chicken, Rabbits, Catfish, Organic Manure, Consultation, Other Products), live search, promotional price badges, and Add to Basket.
 - **Slide-out Cart Drawer**: Instant side-cart review on any page with quantity adjustments, stock limit protection, and subtotal calculation.
 - **Delivery Matrix Table**: Transparent display of delivery zones (Free in Tunga, ₦1,000 flat in regional hubs, Free Farm Pickup).

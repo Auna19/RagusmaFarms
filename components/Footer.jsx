@@ -85,7 +85,7 @@ export default function Footer() {
               At Ragusma Farms, we are pleased to be a family-owned and operated agricultural enterprise dedicated to nourishing our community with healthy poultry, farm rabbits, fresh fish, and organic manure. 
             </p>
             <p className="text-xs text-forest-300 italic border-l-2 border-gold-500 pl-3">
-              &quot;Access to Food is a right, not a privilege.&quot; — Hajiya Ramatu Mallam Madaki (Founder, 2015)
+              &quot;Access to Food is a right, not a privilege.&quot; — Hajiya Ramatu Mallama Madaki (Founder, 2015)
             </p>
 
             <div className="flex items-center gap-3 pt-2">

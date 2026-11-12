@@ -148,7 +148,7 @@ export default async function HomePage() {
                         </span>
                       </div>
                       <h4 className="font-serif font-bold text-gray-900 text-sm sm:text-base leading-snug">
-                        Founded by Hajiya Ramatu Mallam Madaki
+                        Founded by Hajiya Ramatu Mallama Madaki
                       </h4>
                       <p className="text-xs text-forest-700 font-medium mt-0.5">
                         Championed across generations in Minna, Niger State
@@ -187,7 +187,7 @@ export default async function HomePage() {
 
               <ScrollReveal animation="fade-left" delay={150}>
                 <p className="text-base text-gray-600 leading-relaxed">
-                  {content.about?.paragraph1 || 'Founded in 2015 by Hajiya Ramatu Mallam Madaki, Ragusma Farms has evolved from humble beginnings into a benchmark of sustainable, organic agriculture in Niger State. What started as a focused family poultry operation has expanded into a comprehensive agribusiness combining free-range poultry, advanced aquaculture, healthy rabbitry, and commercial organic manure production.'}
+                  {content.about?.paragraph1 || 'Founded in 2015 by Hajiya Ramatu Mallama Madaki, Ragusma Farms has evolved from humble beginnings into a benchmark of sustainable, organic agriculture in Niger State. What started as a focused family poultry operation has expanded into a comprehensive agribusiness combining free-range poultry, advanced aquaculture, healthy rabbitry, and commercial organic manure production.'}
                 </p>
               </ScrollReveal>
 
@@ -393,7 +393,7 @@ export default async function HomePage() {
 
               <ScrollReveal animation="fade-left" delay={250}>
                 <p className="text-sm sm:text-base text-gray-600 leading-relaxed">
-                  Co-managing the family enterprise founded by <strong>Hajiya Ramatu Mallam Madaki in 2015</strong>, he and the Madaki brothers have championed modern, sustainable agribusiness practices. Whether inspecting pastures at sunrise, checking clean water aeration in our catfish ponds, or advising upcoming farmers, his dedication guarantees that every product leaving Ragusma Farms meets the highest standards of purity, nutrition, and health.
+                  Co-managing the family enterprise founded by <strong>Hajiya Ramatu Mallama Madaki in 2015</strong>, he and the Madaki brothers have championed modern, sustainable agribusiness practices. Whether inspecting pastures at sunrise, checking clean water aeration in our catfish ponds, or advising upcoming farmers, his dedication guarantees that every product leaving Ragusma Farms meets the highest standards of purity, nutrition, and health.
                 </p>
               </ScrollReveal>
 
