@@ -9,22 +9,188 @@
   --bg-cream: #FAFBF8;
 }
 
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 5rem;
+}
+
 body {
   background-color: #FAFBF8;
   color: #1A2E20;
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   overflow-x: hidden;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
 }
 
 /* Custom agricultural styling */
 .hero-gradient {
-  background: linear-gradient(135deg, rgba(10, 59, 29, 0.95) 0%, rgba(15, 81, 40, 0.88) 100%);
+  background: linear-gradient(135deg, rgba(10, 59, 29, 0.96) 0%, rgba(15, 81, 40, 0.90) 100%);
 }
 
 .brand-pattern {
   background-color: #0A3B1D;
   background-image: radial-gradient(rgba(255, 255, 255, 0.08) 1px, transparent 0);
   background-size: 24px 24px;
+}
+
+.brand-pattern-light {
+  background-image: radial-gradient(rgba(10, 59, 29, 0.06) 1px, transparent 0);
+  background-size: 24px 24px;
+}
+
+/* =========================================================================
+   CINEMATIC VIDEO-LIKE KEYFRAME ANIMATIONS (WITHOUT REAL VIDEO FILES)
+   Hardware-accelerated via transform: translate3d and scale
+   ========================================================================= */
+
+@keyframes kenBurnsSlow {
+  0% {
+    transform: scale(1.0) translate3d(0, 0, 0);
+  }
+  50% {
+    transform: scale(1.08) translate3d(-1.5%, -1%, 0);
+  }
+  100% {
+    transform: scale(1.0) translate3d(0, 0, 0);
+  }
+}
+
+@keyframes kenBurnsAlt {
+  0% {
+    transform: scale(1.08) translate3d(1%, 0.5%, 0);
+  }
+  50% {
+    transform: scale(1.0) translate3d(-1%, -0.5%, 0);
+  }
+  100% {
+    transform: scale(1.08) translate3d(1%, 0.5%, 0);
+  }
+}
+
+@keyframes floatSlow {
+  0%, 100% {
+    transform: translate3d(0, 0, 0);
+  }
+  50% {
+    transform: translate3d(0, -8px, 0);
+  }
+}
+
+@keyframes floatSlowRev {
+  0%, 100% {
+    transform: translate3d(0, 0, 0);
+  }
+  50% {
+    transform: translate3d(0, 8px, 0);
+  }
+}
+
+@keyframes lightSweep {
+  0% {
+    transform: translate3d(-100%, 0, 0) rotate(25deg);
+    opacity: 0;
+  }
+  30% {
+    opacity: 0.15;
+  }
+  60% {
+    transform: translate3d(200%, 0, 0) rotate(25deg);
+    opacity: 0;
+  }
+  100% {
+    transform: translate3d(200%, 0, 0) rotate(25deg);
+    opacity: 0;
+  }
+}
+
+@keyframes pulseGlow {
+  0%, 100% {
+    opacity: 0.4;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.8;
+    transform: scale(1.05);
+  }
+}
+
+@keyframes sunbeam {
+  0%, 100% {
+    opacity: 0.25;
+    transform: scale(1.0) rotate(0deg);
+  }
+  50% {
+    opacity: 0.45;
+    transform: scale(1.1) rotate(2deg);
+  }
+}
+
+/* Animation utility classes */
+.animate-ken-burns {
+  animation: kenBurnsSlow 26s cubic-bezier(0.25, 1, 0.5, 1) infinite;
+  will-change: transform;
+}
+
+.animate-ken-burns-alt {
+  animation: kenBurnsAlt 30s cubic-bezier(0.25, 1, 0.5, 1) infinite;
+  will-change: transform;
+}
+
+.animate-float-slow {
+  animation: floatSlow 6s ease-in-out infinite;
+  will-change: transform;
+}
+
+.animate-float-rev {
+  animation: floatSlowRev 7s ease-in-out infinite;
+  will-change: transform;
+}
+
+.animate-pulse-glow {
+  animation: pulseGlow 4s ease-in-out infinite;
+}
+
+.animate-sunbeam {
+  animation: sunbeam 12s ease-in-out infinite;
+}
+
+/* Light sweep reflection effect */
+.light-sweep-container {
+  position: relative;
+  overflow: hidden;
+}
+
+.light-sweep-container::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.12) 50%,
+    transparent 100%
+  );
+  animation: lightSweep 10s ease-in-out infinite;
+  pointer-events: none;
+}
+
+/* Glassmorphism helpers */
+.glass-panel {
+  background: rgba(255, 255, 255, 0.88);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+}
+
+.glass-panel-dark {
+  background: rgba(10, 59, 29, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
 }
 
 /* Custom scrollbars */
@@ -46,3 +212,21 @@ body {
   background: #16A34A;
 }
 
+/* =========================================================================
+   ACCESSIBILITY: PREFERS-REDUCED-MOTION SUPPORT
+   Users who disable animations get an instantaneous, high-contrast experience
+   ========================================================================= */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto !important;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
