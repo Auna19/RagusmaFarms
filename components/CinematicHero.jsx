@@ -232,8 +232,8 @@ export default function CinematicHero({ content }) {
 
               {/* Top-Left Floating Badge with Subtle Hover Float */}
               <div className="absolute -top-4 -left-4 sm:-left-6 bg-gold-400 text-forest-950 p-3.5 rounded-2xl shadow-2xl flex items-center gap-3 border-2 border-white z-30 animate-float-slow">
-                <div className="w-8 h-8 rounded-xl bg-forest-950 text-gold-400 flex items-center justify-center font-bold">
-                  🌾
+                <div className="relative w-9 h-9 rounded-xl overflow-hidden border border-forest-800 bg-forest-950 shrink-0 shadow-md">
+                  <Image src="/assets/logo.jpg" alt="Ragusma Farms Logo" fill className="object-cover" />
                 </div>
                 <div>
                   <span className="block text-[10px] font-extrabold uppercase tracking-widest text-forest-900">

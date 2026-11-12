@@ -70,66 +70,94 @@ export default async function HomePage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
             
-            {/* Visual Composition: Multi-layered Cinematic Photo Collage */}
+            {/* Visual Composition: Multi-layered Cinematic Photo Showcase */}
             <div className="lg:col-span-5 relative order-2 lg:order-1">
               <ScrollReveal animation="fade-right" duration={850}>
-                <div className="relative">
+                <div className="space-y-4">
                   
-                  {/* Primary Heritage Photo Frame with Ken Burns Pan */}
-                  <div className="relative rounded-3xl overflow-hidden shadow-2xl border-4 border-forest-100 bg-forest-900 aspect-[4/3] sm:aspect-[16/11]">
-                    <div className="relative w-full h-full animate-ken-burns">
-                      <Image
-                        src="/assets/about-heritage.webp"
-                        alt="Ragusma Farms Heritage"
-                        fill
-                        className="object-cover"
-                        sizes="(max-width: 768px) 100vw, 500px"
-                      />
-                    </div>
-                    <div className="absolute inset-0 bg-gradient-to-t from-forest-950/80 via-transparent to-transparent pointer-events-none" />
+                  {/* Staggered Dual-Photo Cinematic Display */}
+                  <div className="grid grid-cols-2 gap-4 items-start">
                     
-                    {/* Floating pill badge */}
-                    <div className="absolute top-4 left-4 z-20">
-                      <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-forest-950/80 backdrop-blur-md border border-forest-700 text-[10px] font-bold tracking-widest text-gold-300 uppercase shadow-lg">
-                        <Sparkles className="w-3 h-3 text-gold-400" />
-                        Heritage Since 2015
-                      </span>
+                    {/* Heritage Photo Card with Ken Burns Pan */}
+                    <div className="relative rounded-3xl overflow-hidden shadow-xl border-4 border-forest-100 bg-forest-900 aspect-[4/5] light-sweep-container group">
+                      <div className="relative w-full h-full animate-ken-burns">
+                        <Image
+                          src="/assets/about-heritage.webp"
+                          alt="Ragusma Farms Heritage"
+                          fill
+                          className="object-cover"
+                          sizes="(max-width: 768px) 50vw, 260px"
+                        />
+                      </div>
+                      <div className="absolute inset-0 bg-gradient-to-t from-forest-950/80 via-transparent to-transparent pointer-events-none" />
+                      <div className="absolute top-3 left-3 right-3 z-20">
+                        <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-forest-950/85 backdrop-blur-md border border-forest-700 text-[9px] sm:text-[10px] font-bold tracking-widest text-gold-300 uppercase shadow-lg">
+                          <Sparkles className="w-3 h-3 text-gold-400 shrink-0" />
+                          Heritage Since 2015
+                        </span>
+                      </div>
+                      <div className="absolute bottom-3 left-3 right-3 z-20">
+                        <span className="text-[10px] font-extrabold uppercase tracking-wider text-forest-200 block">
+                          Heritage Roots
+                        </span>
+                        <p className="text-xs font-bold text-white leading-tight">
+                          Natural Agro-Pastures
+                        </p>
+                      </div>
                     </div>
 
-                    <div className="absolute bottom-4 left-4 right-4 z-20 text-white">
-                      <h4 className="font-serif font-bold text-base sm:text-lg text-white">
+                    {/* Sustainable Farming Card with Ken Burns Alt Pan */}
+                    <div className="relative rounded-3xl overflow-hidden shadow-xl border-4 border-forest-100 bg-forest-900 aspect-[4/5] mt-6 light-sweep-container group">
+                      <div className="relative w-full h-full animate-ken-burns-alt">
+                        <Image
+                          src="/assets/sustainable-farming.webp"
+                          alt="Sustainable Farming at Ragusma"
+                          fill
+                          className="object-cover group-hover:scale-105 transition-transform duration-700"
+                          sizes="(max-width: 768px) 50vw, 260px"
+                        />
+                      </div>
+                      <div className="absolute inset-0 bg-gradient-to-t from-forest-950/80 via-transparent to-transparent pointer-events-none" />
+                      <div className="absolute top-3 left-3 right-3 z-20">
+                        <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-forest-950/85 backdrop-blur-md border border-forest-700 text-[9px] sm:text-[10px] font-bold tracking-widest text-emerald-300 uppercase shadow-lg">
+                          <Leaf className="w-3 h-3 text-emerald-400 shrink-0" />
+                          Green Economy
+                        </span>
+                      </div>
+                      <div className="absolute bottom-3 left-3 right-3 z-20">
+                        <span className="text-[10px] font-extrabold uppercase tracking-wider text-gold-400 block">
+                          Ecosystem
+                        </span>
+                        <p className="text-xs font-bold text-white leading-tight">
+                          Organic Soil Enrichment
+                        </p>
+                      </div>
+                    </div>
+
+                  </div>
+
+                  {/* Prominent Founder Tribute Card (Fully Visible, High-Contrast & Beautiful) */}
+                  <div className="p-4 sm:p-5 rounded-2xl bg-white shadow-xl border border-forest-200/90 flex items-center gap-3.5 sm:gap-4 relative overflow-hidden">
+                    <div className="relative w-12 h-12 sm:w-14 sm:h-14 rounded-2xl overflow-hidden border-2 border-forest-200 bg-forest-900 shrink-0 shadow-md">
+                      <Image src="/assets/logo.jpg" alt="Ragusma Farms Logo" fill className="object-cover" />
+                    </div>
+                    <div className="min-w-0 flex-1">
+                      <div className="flex items-center gap-2 mb-0.5">
+                        <span className="text-[10px] font-extrabold uppercase tracking-widest text-gold-600 bg-gold-50 px-2 py-0.5 rounded-md border border-gold-200">
+                          Founder Legacy • Est. 2015
+                        </span>
+                      </div>
+                      <h4 className="font-serif font-bold text-gray-900 text-sm sm:text-base leading-snug">
                         Founded by Hajiya Ramatu Mallam Madaki
                       </h4>
-                      <p className="text-xs text-forest-200 mt-0.5">
+                      <p className="text-xs text-forest-700 font-medium mt-0.5">
                         Championed across generations in Minna, Niger State
                       </p>
                     </div>
                   </div>
 
-                  {/* Overlapping Secondary Card: Sustainable Farming */}
-                  <div className="relative -mt-12 ml-auto w-3/4 rounded-2xl overflow-hidden shadow-2xl border-4 border-white bg-forest-900 aspect-[16/10] z-20 group">
-                    <div className="relative w-full h-full animate-ken-burns-alt">
-                      <Image
-                        src="/assets/sustainable-farming.webp"
-                        alt="Sustainable Farming at Ragusma"
-                        fill
-                        className="object-cover group-hover:scale-105 transition-transform duration-700"
-                        sizes="(max-width: 768px) 75vw, 400px"
-                      />
-                    </div>
-                    <div className="absolute inset-0 bg-gradient-to-t from-forest-950/75 via-transparent to-transparent pointer-events-none" />
-                    <div className="absolute bottom-3 left-3 right-3 text-white">
-                      <span className="text-[10px] font-extrabold uppercase tracking-wider text-gold-400 block">
-                        Project Green Economy
-                      </span>
-                      <p className="text-xs font-bold text-white truncate">
-                        Circular Livestock & Organic Manure
-                      </p>
-                    </div>
-                  </div>
-
                   {/* Founder Quote Card with Glow */}
-                  <div className="mt-5 p-5 rounded-2xl bg-forest-900 text-white shadow-xl relative overflow-hidden border border-forest-800">
+                  <div className="p-5 rounded-2xl bg-forest-900 text-white shadow-xl relative overflow-hidden border border-forest-800">
                     <div className="absolute top-0 right-0 -mt-6 -mr-6 w-24 h-24 rounded-full bg-gold-500/10 blur-xl pointer-events-none" />
                     <p className="text-sm sm:text-base font-serif italic text-gold-300 leading-relaxed">
                       &quot;{content.about?.quote || 'Our land is our heritage, and every animal reared under our care reflects a promise of wholesomeness and trust.'}&quot;
