@@ -1,6 +1,9 @@
 import { NextResponse } from 'next/server';
+import { revalidatePath } from 'next/cache';
 import { db } from '@/lib/db';
 import { requireAdmin } from '@/lib/auth';
+
+export const dynamic = 'force-dynamic';
 
 export async function GET(req) {
   try {
@@ -34,6 +37,11 @@ export async function POST(req) {
       estimatedDeliveryTime,
       isActive: isActive !== false
     });
+
+    try {
+      revalidatePath('/', 'page');
+      revalidatePath('/dashboard/checkout', 'page');
+    } catch (_) {}
 
     return NextResponse.json({
       success: true,

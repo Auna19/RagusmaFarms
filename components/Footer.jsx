@@ -16,7 +16,7 @@ import {
   Twitter 
 } from 'lucide-react';
 
-export default function Footer() {
+export default function Footer({ address, phone, email, hours }) {
   return (
     <footer className="bg-forest-950 text-forest-100 border-t border-forest-900">
       {/* Top Value Highlights */}
@@ -151,15 +151,19 @@ export default function Footer() {
             <ul className="space-y-3 text-sm text-forest-200">
               <li className="flex items-start gap-2.5">
                 <MapPin className="w-4 h-4 text-gold-400 shrink-0 mt-0.5" />
-                <span>📍 Tunga goro, Behind FGC minna, Niger state.</span>
+                <span>{address || '📍 Tunga goro, Behind FGC minna, Niger state.'}</span>
               </li>
               <li className="flex items-center gap-2.5">
                 <Phone className="w-4 h-4 text-gold-400 shrink-0" />
-                <a href="tel:+2348135834368" className="hover:text-white transition">+234 813 583 4368</a>
+                <a href={`tel:${(phone || '+2348135834368').replace(/\s+/g, '')}`} className="hover:text-white transition">
+                  {phone || '+234 813 583 4368'}
+                </a>
               </li>
               <li className="flex items-center gap-2.5">
                 <Mail className="w-4 h-4 text-gold-400 shrink-0" />
-                <a href="mailto:Ragusmaa@gmail.com" className="hover:text-white transition">Ragusmaa@gmail.com</a>
+                <a href={`mailto:${email || 'Ragusmaa@gmail.com'}`} className="hover:text-white transition">
+                  {email || 'Ragusmaa@gmail.com'}
+                </a>
               </li>
               <li className="flex items-start gap-2.5">
                 <Clock className="w-4 h-4 text-gold-400 shrink-0 mt-0.5" />

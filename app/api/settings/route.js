@@ -1,6 +1,9 @@
 import { NextResponse } from 'next/server';
+import { revalidatePath } from 'next/cache';
 import { db } from '@/lib/db';
 import { requireAdmin, getCurrentUser } from '@/lib/auth';
+
+export const dynamic = 'force-dynamic';
 
 export async function GET(req) {
   try {
@@ -43,6 +46,13 @@ export async function PUT(req) {
     const body = await req.json();
 
     const updated = await db.settings.update(body);
+
+    try {
+      revalidatePath('/', 'page');
+      revalidatePath('/dashboard/checkout', 'page');
+      revalidatePath('/about', 'page');
+      revalidatePath('/contact', 'page');
+    } catch (_) {}
 
     return NextResponse.json({
       success: true,

@@ -33,6 +33,8 @@ import {
   Check
 } from 'lucide-react';
 
+export const dynamic = 'force-dynamic';
+export const fetchCache = 'force-no-store';
 export const revalidate = 0; // ensure fresh data from db
 
 export default async function HomePage() {
@@ -42,6 +44,9 @@ export default async function HomePage() {
   const featuredProducts = await db.products.getAll({ onlyActive: true });
   const deliveryLocations = await db.deliveryLocations.getAll(true);
   const testimonials = await db.testimonials.getAll(true);
+
+  const freeLocations = (deliveryLocations || []).filter(l => Number(l.charge) === 0);
+  const freeLocationNames = freeLocations.map(l => l.name).join(', ') || 'Tunga';
 
   return (
     <div className="min-h-screen flex flex-col bg-cream-50 text-forest-950 relative selection:bg-gold-400 selection:text-forest-950">
@@ -414,7 +419,7 @@ export default async function HomePage() {
                 <div className="pt-2 space-y-4">
                   <div className="flex items-center gap-2.5 text-xs sm:text-sm font-semibold text-gray-800">
                     <MapPin className="w-4 h-4 text-forest-700 shrink-0" />
-                    <span>📍 Tunga goro, Behind FGC minna, Niger state.</span>
+                    <span>{settings.farmPickupAddress || content.contact?.farmAddress || '📍 Tunga goro, Behind FGC minna, Niger state.'}</span>
                   </div>
 
                   <div className="flex flex-wrap items-center gap-3 pt-2">
@@ -776,7 +781,9 @@ export default async function HomePage() {
                 </div>
                 <h3 className="font-bold text-gray-900 text-lg mb-2">Delivery or Pickup</h3>
                 <p className="text-xs text-gray-500 leading-relaxed">
-                  Enjoy FREE delivery in Tunga, flat ₦1,000 for regional towns, or ₦0 free collection at our farm gate.
+                  {freeLocations.length > 0 
+                    ? `Enjoy FREE delivery in ${freeLocationNames}, transparent rates for regional towns, or ₦0 collection at our farm gate.`
+                    : `Enjoy direct doorstep dispatch across Minna municipalities or ₦0 free collection at our farm gate.`}
                 </p>
               </div>
             </ScrollReveal>
@@ -831,7 +838,7 @@ export default async function HomePage() {
                     <span>Farm Gate Pickup (Always ₦0 FREE)</span>
                   </h4>
                   <p className="text-xs sm:text-sm text-gray-700 leading-relaxed">
-                    <strong>Location:</strong> 📍 Tunga goro, Behind FGC minna, Niger state.
+                    <strong>Location:</strong> {settings.farmPickupAddress || '📍 Tunga goro, Behind FGC minna, Niger state.'}
                   </p>
                   <p className="text-xs text-gray-500">
                     {settings.pickupInstructions || 'Pickup hours: 8:00 AM – 6:00 PM Monday through Saturday. Please bring your Order ID.'}
@@ -841,7 +848,7 @@ export default async function HomePage() {
 
               <ScrollReveal animation="fade-right" delay={250}>
                 <p className="text-xs text-gray-500 italic">
-                  * Note: For deliveries to communities not listed in the table, please contact our farm office at <a href="tel:+2348135834368" className="text-forest-700 font-semibold underline">+234 813 583 4368</a> for custom logistics confirmation.
+                  * Note: For deliveries to communities not listed in the table, please contact our farm office at <a href={`tel:${(content.contact?.phone || '+2348135834368').replace(/\s+/g, '')}`} className="text-forest-700 font-semibold underline">{content.contact?.phone || '+234 813 583 4368'}</a> for custom logistics confirmation.
                 </p>
               </ScrollReveal>
             </div>
@@ -863,33 +870,42 @@ export default async function HomePage() {
                   </div>
 
                   <div className="divide-y divide-forest-100 max-h-[380px] overflow-y-auto">
-                    {deliveryLocations.map((loc) => (
-                      <div key={loc.id} className="p-4 sm:p-5 flex items-center justify-between hover:bg-forest-50/60 transition-colors">
-                        <div>
-                          <div className="flex items-center gap-2">
-                            <span className="font-bold text-gray-900 text-sm sm:text-base">{loc.name}</span>
-                            {loc.charge === 0 && (
-                              <span className="bg-emerald-100 text-emerald-800 text-[10px] font-extrabold px-2 py-0.5 rounded-full uppercase">
-                                Free Delivery
-                              </span>
-                            )}
-                          </div>
-                          <p className="text-xs text-gray-500 mt-0.5">{loc.description || loc.estimatedDeliveryTime}</p>
-                        </div>
+                    {deliveryLocations && deliveryLocations.length > 0 ? (
+                      deliveryLocations.map((loc) => {
+                        const isFree = Number(loc.charge) === 0;
+                        return (
+                          <div key={loc.id} className="p-4 sm:p-5 flex items-center justify-between hover:bg-forest-50/60 transition-colors">
+                            <div>
+                              <div className="flex items-center gap-2">
+                                <span className="font-bold text-gray-900 text-sm sm:text-base">{loc.name}</span>
+                                {isFree && (
+                                  <span className="bg-emerald-100 text-emerald-800 text-[10px] font-extrabold px-2 py-0.5 rounded-full uppercase">
+                                    Free Delivery
+                                  </span>
+                                )}
+                              </div>
+                              <p className="text-xs text-gray-500 mt-0.5">{loc.description || loc.estimatedDeliveryTime || 'Same-day dispatch'}</p>
+                            </div>
 
-                        <div className="text-right">
-                          <span className={`text-base sm:text-lg font-extrabold ${loc.charge === 0 ? 'text-emerald-700' : 'text-forest-900'}`}>
-                            {loc.charge === 0 ? 'FREE (₦0)' : formatNaira(loc.charge)}
-                          </span>
-                          <span className="block text-[10px] text-gray-400">Doorstep drop</span>
-                        </div>
+                            <div className="text-right">
+                              <span className={`text-base sm:text-lg font-extrabold ${isFree ? 'text-emerald-700' : 'text-forest-900'}`}>
+                                {isFree ? 'FREE (₦0)' : formatNaira(loc.charge)}
+                              </span>
+                              <span className="block text-[10px] text-gray-400">Doorstep drop</span>
+                            </div>
+                          </div>
+                        );
+                      })
+                    ) : (
+                      <div className="p-6 text-center text-xs text-gray-500">
+                        Loading active delivery zones...
                       </div>
-                    ))}
+                    )}
 
                     <div className="p-4 sm:p-5 flex items-center justify-between bg-gold-50/50">
                       <div>
-                        <span className="font-bold text-gray-900 text-sm sm:text-base">Farm Pickup</span>
-                        <p className="text-xs text-gray-500">Collect directly at Ragusma Farms Main Gate</p>
+                        <span className="font-bold text-gray-900 text-sm sm:text-base">Farm Gate Pickup</span>
+                        <p className="text-xs text-gray-500">{settings.farmPickupAddress || 'Collect directly at Ragusma Farms Main Gate'}</p>
                       </div>
                       <div className="text-right">
                         <span className="text-base sm:text-lg font-extrabold text-emerald-700">FREE (₦0)</span>
@@ -1027,7 +1043,7 @@ export default async function HomePage() {
                     <div>
                       <h4 className="text-[11px] font-bold uppercase tracking-wider text-gray-500">Farm Location & Service Desk</h4>
                       <p className="text-sm font-bold text-gray-900">
-                        📍 Tunga goro, Behind FGC minna, Niger state.
+                        {settings.farmPickupAddress || content.contact?.farmAddress || '📍 Tunga goro, Behind FGC minna, Niger state.'}
                       </p>
                       <p className="text-xs text-forest-700 italic mt-0.5">
                         &quot;At the very heart of agriculture is the drive to feed the world.&quot;
@@ -1052,7 +1068,11 @@ export default async function HomePage() {
         </div>
       </section>
 
-      <Footer />
+      <Footer 
+        address={settings.farmPickupAddress || content.contact?.farmAddress}
+        phone={content.contact?.phone}
+        email={content.contact?.email}
+      />
     </div>
   );
 }

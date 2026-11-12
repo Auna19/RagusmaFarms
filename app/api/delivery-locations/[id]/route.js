@@ -1,6 +1,9 @@
 import { NextResponse } from 'next/server';
+import { revalidatePath } from 'next/cache';
 import { db } from '@/lib/db';
 import { requireAdmin } from '@/lib/auth';
+
+export const dynamic = 'force-dynamic';
 
 export async function PUT(req, { params }) {
   try {
@@ -14,6 +17,11 @@ export async function PUT(req, { params }) {
     }
 
     const updated = await db.deliveryLocations.update(id, body);
+
+    try {
+      revalidatePath('/', 'page');
+      revalidatePath('/dashboard/checkout', 'page');
+    } catch (_) {}
 
     return NextResponse.json({
       success: true,
@@ -37,6 +45,11 @@ export async function DELETE(req, { params }) {
     }
 
     await db.deliveryLocations.delete(id);
+
+    try {
+      revalidatePath('/', 'page');
+      revalidatePath('/dashboard/checkout', 'page');
+    } catch (_) {}
 
     return NextResponse.json({
       success: true,
