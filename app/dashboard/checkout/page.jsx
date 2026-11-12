@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { useAuth } from '@/context/AuthContext';
 import { useCart } from '@/context/CartContext';
+import { useToast } from '@/context/ToastContext';
 import { formatNaira } from '@/lib/utils';
 import { 
   Truck, 
@@ -24,6 +25,7 @@ export default function CheckoutPage() {
   const router = useRouter();
   const { user } = useAuth();
   const { items, cartSubtotal, clearCart } = useCart();
+  const toast = useToast();
 
   const [deliveryLocations, setDeliveryLocations] = useState([]);
   const [settings, setSettings] = useState(null);
@@ -141,7 +143,12 @@ export default function CheckoutPage() {
       }
 
       // Success: clear cart and redirect to order tracking view
-      clearCart();
+      clearCart(false);
+      const orderRef = data.order?.orderNumber || (data.order?.id ? String(data.order.id).slice(0, 8) : '');
+      toast.success(
+        `Order ${orderRef ? '#' + orderRef + ' ' : ''}placed successfully! Farm dispatch team notified.`,
+        'Order Confirmed'
+      );
       router.push(`/dashboard/orders/${data.order.id}?new=true`);
     } catch (err) {
       setError(err.message || 'An error occurred during checkout.');

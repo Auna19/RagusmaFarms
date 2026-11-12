@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
+import { useToast } from '@/context/ToastContext';
 import { formatNaira } from '@/lib/utils';
 import { 
   Plus, 
@@ -18,6 +19,7 @@ import {
 } from 'lucide-react';
 
 export default function AdminProductsPage() {
+  const toast = useToast();
   const [products, setProducts] = useState([]);
   const [categories, setCategories] = useState([]);
   const [search, setSearch] = useState('');
@@ -57,40 +59,51 @@ export default function AdminProductsPage() {
       if (!res.ok) throw new Error(data.error);
 
       setFeedback(`Product "${name}" deleted successfully.`);
+      toast.success(`Product "${name}" deleted from catalogue.`, 'Product Removed');
       loadData();
       setTimeout(() => setFeedback(''), 3000);
     } catch (err) {
-      alert(err.message || 'Failed to delete product');
+      toast.error(err.message || 'Failed to delete product', 'Error');
     }
   };
 
   const handleToggleStatus = async (product) => {
     try {
+      const nextStatus = !product.isAvailable;
       const res = await fetch(`/api/products/${product.id}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ isAvailable: !product.isAvailable })
+        body: JSON.stringify({ isAvailable: nextStatus })
       });
       if (res.ok) {
+        toast.success(
+          `"${product.name}" is now ${nextStatus ? 'active in store' : 'hidden from store'}.`,
+          'Status Changed'
+        );
         loadData();
       }
     } catch (err) {
-      console.error(err);
+      toast.error('Failed to change product status', 'Error');
     }
   };
 
   const handleToggleFeatured = async (product) => {
     try {
+      const nextFeatured = !product.isFeatured;
       const res = await fetch(`/api/products/${product.id}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ isFeatured: !product.isFeatured })
+        body: JSON.stringify({ isFeatured: nextFeatured })
       });
       if (res.ok) {
+        toast.success(
+          `"${product.name}" ${nextFeatured ? 'marked as featured' : 'removed from featured'}.`,
+          'Featured Status'
+        );
         loadData();
       }
     } catch (err) {
-      console.error(err);
+      toast.error('Failed to update featured status', 'Error');
     }
   };
 

@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/context/AuthContext';
+import { useToast } from '@/context/ToastContext';
 import { 
   User, 
   Mail, 
@@ -22,6 +23,7 @@ import {
 export default function AdminProfilePage() {
   const router = useRouter();
   const { user, logout, refreshUser } = useAuth();
+  const toast = useToast();
 
   // Profile Form State
   const [profileData, setProfileData] = useState({
@@ -87,12 +89,14 @@ export default function AdminProfilePage() {
       if (!res.ok) throw new Error(data.error || 'Failed to update profile');
 
       setProfileSuccess('Profile information updated successfully!');
+      toast.success('Admin profile updated successfully!', 'Profile Updated');
       if (refreshUser) {
         await refreshUser();
       }
       setTimeout(() => setProfileSuccess(''), 4000);
     } catch (err) {
       setProfileError(err.message || 'Error updating profile');
+      toast.error(err.message || 'Error updating profile', 'Error');
     } finally {
       setSavingProfile(false);
     }
@@ -125,10 +129,12 @@ export default function AdminProfilePage() {
       if (!res.ok) throw new Error(data.error || 'Failed to change password');
 
       setPasswordSuccess('Password successfully updated! Please remember your new credentials.');
+      toast.success('Admin password updated successfully!', 'Security Updated');
       setPasswordData({ currentPassword: '', newPassword: '', confirmPassword: '' });
       setTimeout(() => setPasswordSuccess(''), 5000);
     } catch (err) {
       setPasswordError(err.message || 'Error updating password');
+      toast.error(err.message || 'Error updating password', 'Error');
     } finally {
       setSavingPassword(false);
     }
@@ -136,6 +142,7 @@ export default function AdminProfilePage() {
 
   const handleLogout = async () => {
     await logout();
+    toast.info('You have logged out of the admin portal.', 'Logged Out');
     router.push('/admin/login');
   };
 

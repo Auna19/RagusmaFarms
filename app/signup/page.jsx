@@ -5,11 +5,13 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/context/AuthContext';
+import { useToast } from '@/context/ToastContext';
 import { User, Mail, Phone, Lock, Eye, EyeOff, ArrowRight, AlertCircle } from 'lucide-react';
 
 export default function SignUpPage() {
   const router = useRouter();
   const { register } = useAuth();
+  const toast = useToast();
 
   const [formData, setFormData] = useState({
     fullName: '',
@@ -44,6 +46,7 @@ export default function SignUpPage() {
 
     try {
       await register(formData);
+      toast.success('Account created successfully! Welcome to Ragusma Farms.', 'Welcome');
       router.push('/dashboard');
     } catch (err) {
       setError(err.message || 'Registration failed. Please try again.');

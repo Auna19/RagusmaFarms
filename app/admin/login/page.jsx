@@ -5,11 +5,13 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/context/AuthContext';
+import { useToast } from '@/context/ToastContext';
 import { Shield, Lock, Mail, Eye, EyeOff, ArrowRight, AlertCircle, KeyRound } from 'lucide-react';
 
 export default function AdminLoginPage() {
   const router = useRouter();
   const { login } = useAuth();
+  const toast = useToast();
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -24,6 +26,7 @@ export default function AdminLoginPage() {
 
     try {
       const data = await login(email, password, 'admin');
+      toast.success('Admin authentication successful. Welcome back!', 'Access Granted');
       router.push(data.redirectTo || '/admin/dashboard');
     } catch (err) {
       setError(err.message || 'Administrator login failed.');

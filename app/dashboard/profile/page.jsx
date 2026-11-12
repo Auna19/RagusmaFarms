@@ -3,10 +3,12 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { useAuth } from '@/context/AuthContext';
+import { useToast } from '@/context/ToastContext';
 import { User, Mail, Phone, MapPin, CheckCircle2, AlertCircle, Save, Lock, KeyRound } from 'lucide-react';
 
 export default function ProfilePage() {
   const { user, refreshUser } = useAuth();
+  const toast = useToast();
 
   const [fullName, setFullName] = useState(user?.fullName || '');
   const [phone, setPhone] = useState(user?.phone || '');
@@ -30,10 +32,12 @@ export default function ProfilePage() {
       if (!res.ok) throw new Error(data.error);
 
       setFeedback('Profile details updated successfully!');
+      toast.success('Your profile details have been updated successfully!', 'Profile Updated');
       refreshUser();
       setTimeout(() => setFeedback(''), 3000);
     } catch (err) {
       setError(err.message || 'Failed to update profile');
+      toast.error(err.message || 'Failed to update profile', 'Error');
     } finally {
       setSaving(false);
     }

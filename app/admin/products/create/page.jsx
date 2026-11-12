@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
+import { useToast } from '@/context/ToastContext';
 import { 
   ArrowLeft, 
   Upload, 
@@ -18,6 +19,7 @@ import {
 
 export default function CreateProductPage() {
   const router = useRouter();
+  const toast = useToast();
 
   const [categories, setCategories] = useState([]);
   const [formData, setFormData] = useState({
@@ -82,6 +84,7 @@ export default function CreateProductPage() {
 
       if (data.urls) {
         setImages(prev => [...prev, ...data.urls]);
+        toast.success('Product image(s) uploaded successfully!', 'Upload Complete');
       }
     } catch (err) {
       setError(err.message || 'Image upload error');
@@ -144,6 +147,7 @@ export default function CreateProductPage() {
 
       if (!res.ok) throw new Error(data.error || 'Failed to create product');
 
+      toast.success(`Product "${formData.name}" added to catalogue successfully!`, 'Product Created');
       router.push('/admin/products');
     } catch (err) {
       setError(err.message || 'Failed to save product');

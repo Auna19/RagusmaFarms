@@ -1,9 +1,11 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
+import { useToast } from '@/context/ToastContext';
 import { MessageSquare, Plus, Edit, Trash2, Check, X, Star, AlertCircle } from 'lucide-react';
 
 export default function AdminTestimonialsPage() {
+  const toast = useToast();
   const [testimonials, setTestimonials] = useState([]);
   const [loading, setLoading] = useState(true);
   const [modalOpen, setModalOpen] = useState(false);
@@ -75,11 +77,13 @@ export default function AdminTestimonialsPage() {
       if (!res.ok) throw new Error(data.error);
 
       setModalOpen(false);
-      setFeedback(`Testimonial ${editingItem ? 'updated' : 'added'} successfully!`);
+      const actionText = editingItem ? 'updated' : 'added';
+      setFeedback(`Testimonial ${actionText} successfully!`);
+      toast.success(`Customer testimonial from "${formData.name}" ${actionText} successfully!`, 'Testimonial Saved');
       loadTestimonials();
       setTimeout(() => setFeedback(''), 3000);
     } catch (err) {
-      alert(err.message || 'Operation failed');
+      toast.error(err.message || 'Operation failed', 'Error');
     }
   };
 
@@ -90,11 +94,12 @@ export default function AdminTestimonialsPage() {
       const res = await fetch(`/api/testimonials/${item.id}`, { method: 'DELETE' });
       if (res.ok) {
         setFeedback('Testimonial removed');
+        toast.success(`Testimonial from "${item.name}" removed.`, 'Testimonial Removed');
         loadTestimonials();
         setTimeout(() => setFeedback(''), 3000);
       }
     } catch (err) {
-      alert(err.message);
+      toast.error(err.message || 'Failed to remove testimonial', 'Error');
     }
   };
 

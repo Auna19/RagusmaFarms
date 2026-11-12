@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
+import { useToast } from '@/context/ToastContext';
 import { formatDate } from '@/lib/utils';
 import { 
   Boxes, 
@@ -14,6 +15,7 @@ import {
 } from 'lucide-react';
 
 export default function AdminInventoryPage() {
+  const toast = useToast();
   const [inventory, setInventory] = useState([]);
   const [logs, setLogs] = useState([]);
   const [threshold, setThreshold] = useState(10);
@@ -69,10 +71,14 @@ export default function AdminInventoryPage() {
 
       setAdjustModal(false);
       setFeedback(`Stock updated for ${selectedProduct.name} to ${newStock} units.`);
+      toast.success(
+        `Stock updated for "${selectedProduct.name}" to ${newStock} units.`,
+        'Inventory Restocked'
+      );
       loadInventory();
       setTimeout(() => setFeedback(''), 3000);
     } catch (err) {
-      alert(err.message || 'Failed to update stock');
+      toast.error(err.message || 'Failed to update stock', 'Error');
     } finally {
       setSaving(false);
     }

@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useParams, useRouter, useSearchParams } from 'next/navigation';
+import { useToast } from '@/context/ToastContext';
 import { formatNaira, formatDate, getStatusBadgeClass } from '@/lib/utils';
 import { 
   ArrowLeft, 
@@ -24,6 +25,7 @@ function OrderTrackingContent() {
   const params = useParams();
   const searchParams = useSearchParams();
   const router = useRouter();
+  const toast = useToast();
   const { id } = params;
   const isNew = searchParams.get('new') === 'true';
 
@@ -103,10 +105,11 @@ function OrderTrackingContent() {
       const data = await res.json();
       if (!res.ok) throw new Error(data.error);
       setActionFeedback('Order has been successfully cancelled.');
+      toast.info('Your order has been cancelled.', 'Order Cancelled');
       setCancelModal(false);
       fetchOrder();
     } catch (err) {
-      alert(err.message || 'Failed to cancel order');
+      toast.error(err.message || 'Failed to cancel order', 'Error');
     } finally {
       setCancelling(false);
     }
@@ -122,9 +125,10 @@ function OrderTrackingContent() {
       const data = await res.json();
       if (!res.ok) throw new Error(data.error);
       setActionFeedback('Payment verified successfully!');
+      toast.success('Payment simulation successful! Order marked as paid.', 'Payment Verified');
       fetchOrder();
     } catch (err) {
-      alert(err.message);
+      toast.error(err.message, 'Payment Error');
     }
   };
 

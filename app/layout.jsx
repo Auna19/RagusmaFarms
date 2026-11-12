@@ -1,5 +1,6 @@
 import './globals.css';
 import { AuthProvider } from '@/context/AuthContext';
+import { ToastProvider } from '@/context/ToastContext';
 import { CartProvider } from '@/context/CartContext';
 import GlobalCartDrawer from '@/components/GlobalCartDrawer';
 
@@ -28,12 +29,14 @@ export default function RootLayout({ children }) {
         <link rel="icon" href="/assets/logo.jpg" />
       </head>
       <body className="min-h-screen flex flex-col bg-cream-50 text-forest-950 antialiased selection:bg-forest-100 selection:text-forest-900">
-        <AuthProvider>
-          <CartProvider>
-            {children}
-            <GlobalCartDrawer />
-          </CartProvider>
-        </AuthProvider>
+        <ToastProvider>
+          <AuthProvider>
+            <CartProvider>
+              {children}
+              <GlobalCartDrawer />
+            </CartProvider>
+          </AuthProvider>
+        </ToastProvider>
       </body>
     </html>
   );

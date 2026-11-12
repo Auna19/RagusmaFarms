@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
+import { useToast } from '@/context/ToastContext';
 import { 
   Plus, 
   Edit, 
@@ -13,6 +14,7 @@ import {
 } from 'lucide-react';
 
 export default function AdminCategoriesPage() {
+  const toast = useToast();
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(true);
   const [modalOpen, setModalOpen] = useState(false);
@@ -68,11 +70,14 @@ export default function AdminCategoriesPage() {
       if (!res.ok) throw new Error(data.error);
 
       setModalOpen(false);
-      setFeedback(`Category ${editingCat ? 'updated' : 'created'} successfully!`);
+      const actionText = editingCat ? 'updated' : 'created';
+      setFeedback(`Category ${actionText} successfully!`);
+      toast.success(`Category "${formData.name}" ${actionText} successfully!`, 'Category Saved');
       loadCategories();
       setTimeout(() => setFeedback(''), 3000);
     } catch (err) {
       setError(err.message || 'Operation failed');
+      toast.error(err.message || 'Operation failed', 'Error');
     }
   };
 
@@ -85,10 +90,11 @@ export default function AdminCategoriesPage() {
       if (!res.ok) throw new Error(data.error);
 
       setFeedback(`Category "${cat.name}" deleted.`);
+      toast.success(`Category "${cat.name}" deleted.`, 'Category Removed');
       loadCategories();
       setTimeout(() => setFeedback(''), 3000);
     } catch (err) {
-      alert(err.message || 'Failed to delete category');
+      toast.error(err.message || 'Failed to delete category', 'Error');
     }
   };
 

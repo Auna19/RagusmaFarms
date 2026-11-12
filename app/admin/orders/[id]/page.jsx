@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useParams } from 'next/navigation';
+import { useToast } from '@/context/ToastContext';
 import { formatNaira, formatDate, getStatusBadgeClass } from '@/lib/utils';
 import { 
   ArrowLeft, 
@@ -23,6 +24,7 @@ import {
 
 export default function AdminOrderDetailPage() {
   const params = useParams();
+  const toast = useToast();
   const { id } = params;
 
   const [order, setOrder] = useState(null);
@@ -75,11 +77,15 @@ export default function AdminOrderDetailPage() {
       if (!res.ok) throw new Error(data.error);
 
       setFeedback('Order status and fulfillment notes updated successfully!');
+      toast.success(
+        `Order status updated to "${selectedStatus}" successfully!`,
+        'Order Updated'
+      );
       setStatusNote('');
       fetchOrder();
       setTimeout(() => setFeedback(''), 3000);
     } catch (err) {
-      alert(err.message || 'Failed to update order');
+      toast.error(err.message || 'Failed to update order', 'Error');
     } finally {
       setUpdating(false);
     }

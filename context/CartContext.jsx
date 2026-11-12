@@ -1,10 +1,12 @@
 'use client';
 
 import React, { createContext, useContext, useState, useEffect } from 'react';
+import { useToast } from '@/context/ToastContext';
 
 const CartContext = createContext(null);
 
 export function CartProvider({ children }) {
+  const toast = useToast();
   const [items, setItems] = useState([]);
   const [isInitialized, setIsInitialized] = useState(false);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
@@ -92,6 +94,9 @@ export function CartProvider({ children }) {
 
     if (added) {
       setIsDrawerOpen(true);
+      toast.success(message, 'Basket Updated');
+    } else if (message) {
+      toast.warning(message, 'Stock Limit');
     }
 
     return { success: added, message };
@@ -120,11 +125,22 @@ export function CartProvider({ children }) {
   };
 
   const removeFromCart = (productId) => {
-    setItems(prevItems => prevItems.filter(i => i.productId !== productId));
+    setItems(prevItems => {
+      const itemToRemove = prevItems.find(i => i.productId === productId);
+      if (itemToRemove) {
+        toast.info(`Removed "${itemToRemove.productName}" from your cart.`, 'Item Removed');
+      }
+      return prevItems.filter(i => i.productId !== productId);
+    });
   };
 
-  const clearCart = () => {
-    setItems([]);
+  const clearCart = (notify = true) => {
+    setItems(prevItems => {
+      if (notify && prevItems.length > 0) {
+        toast.info('Your cart has been cleared.', 'Cart Cleared');
+      }
+      return [];
+    });
   };
 
   const cartCount = items.reduce((sum, item) => sum + item.quantity, 0);

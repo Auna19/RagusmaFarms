@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
+import { useToast } from '@/context/ToastContext';
 import { formatNaira } from '@/lib/utils';
 import { 
   Truck, 
@@ -16,6 +17,7 @@ import {
 } from 'lucide-react';
 
 export default function AdminDeliveryPage() {
+  const toast = useToast();
   const [locations, setLocations] = useState([]);
   const [loading, setLoading] = useState(true);
   const [modalOpen, setModalOpen] = useState(false);
@@ -93,16 +95,18 @@ export default function AdminDeliveryPage() {
 
       setModalOpen(false);
       setFeedback(`Delivery location "${formData.name}" saved successfully!`);
+      toast.success(`Delivery location "${formData.name}" saved successfully!`, 'Zone Saved');
       loadLocations();
       setTimeout(() => setFeedback(''), 3000);
     } catch (err) {
       setError(err.message || 'Operation failed');
+      toast.error(err.message || 'Operation failed', 'Error');
     }
   };
 
   const handleDelete = async (loc) => {
     if (loc.name.toLowerCase() === 'tunga') {
-      alert('Tunga is the default free delivery location and cannot be deleted.');
+      toast.warning('Tunga is the default free delivery location and cannot be deleted.', 'Action Blocked');
       return;
     }
 
@@ -114,10 +118,11 @@ export default function AdminDeliveryPage() {
       if (!res.ok) throw new Error(data.error);
 
       setFeedback(`Location "${loc.name}" deleted.`);
+      toast.success(`Delivery zone "${loc.name}" removed successfully.`, 'Zone Deleted');
       loadLocations();
       setTimeout(() => setFeedback(''), 3000);
     } catch (err) {
-      alert(err.message || 'Failed to delete location');
+      toast.error(err.message || 'Failed to delete location', 'Error');
     }
   };
 

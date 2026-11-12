@@ -2,6 +2,7 @@
 
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
+import { useToast } from '@/context/ToastContext';
 
 const AuthContext = createContext(null);
 
@@ -9,6 +10,7 @@ export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const router = useRouter();
+  const toast = useToast();
 
   const refreshUser = async () => {
     try {
@@ -65,6 +67,7 @@ export function AuthProvider({ children }) {
       console.error(err);
     }
     setUser(null);
+    toast.info('You have logged out successfully.', 'Signed Out');
     router.push('/login');
   };
 

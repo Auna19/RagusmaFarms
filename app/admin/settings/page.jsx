@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { useToast } from '@/context/ToastContext';
 import { 
   Settings, 
   Save, 
@@ -16,6 +17,7 @@ import {
 } from 'lucide-react';
 
 export default function AdminSettingsPage() {
+  const toast = useToast();
   const [settings, setSettings] = useState(null);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
@@ -54,9 +56,11 @@ export default function AdminSettingsPage() {
       if (!res.ok) throw new Error(data.error);
 
       setFeedback('Business settings & payment configurations updated successfully!');
+      toast.success('Farm settings and payment configurations updated successfully!', 'Settings Saved');
       setTimeout(() => setFeedback(''), 3000);
     } catch (err) {
       setError(err.message || 'Failed to save settings');
+      toast.error(err.message || 'Failed to save settings', 'Error');
     } finally {
       setSaving(false);
     }

@@ -4,11 +4,13 @@ import React, { useState, Suspense } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useRouter, useSearchParams } from 'next/navigation';
+import { useToast } from '@/context/ToastContext';
 import { Lock, Eye, EyeOff, ArrowRight, AlertCircle, CheckCircle2 } from 'lucide-react';
 
 function ResetPasswordForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
+  const toast = useToast();
   const email = searchParams.get('email') || '';
   const token = searchParams.get('token') || '';
 
@@ -48,9 +50,13 @@ function ResetPasswordForm() {
       }
 
       setSuccess(data.message);
+      toast.success(
+        'Password reset successfully! Please sign in with your new password.',
+        'Account Recovered'
+      );
       setTimeout(() => {
         router.push('/login');
-      }, 2000);
+      }, 1500);
     } catch (err) {
       setError(err.message);
     } finally {

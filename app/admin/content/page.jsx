@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
+import { useToast } from '@/context/ToastContext';
 import { 
   FileText, 
   Save, 
@@ -16,6 +17,7 @@ import {
 } from 'lucide-react';
 
 export default function AdminContentPage() {
+  const toast = useToast();
   const [content, setContent] = useState(null);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
@@ -54,9 +56,11 @@ export default function AdminContentPage() {
       if (!res.ok) throw new Error(data.error);
 
       setFeedback('Website content updated successfully! Public landing page updated.');
+      toast.success('Landing page and website content saved successfully!', 'Content Published');
       setTimeout(() => setFeedback(''), 3000);
     } catch (err) {
       setError(err.message || 'Failed to update website content');
+      toast.error(err.message || 'Failed to update website content', 'Error');
     } finally {
       setSaving(false);
     }

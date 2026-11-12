@@ -3,9 +3,11 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
+import { useToast } from '@/context/ToastContext';
 import { Mail, ArrowRight, ArrowLeft, CheckCircle2, AlertCircle } from 'lucide-react';
 
 export default function ForgotPasswordPage() {
+  const toast = useToast();
   const [email, setEmail] = useState('');
   const [message, setMessage] = useState('');
   const [error, setError] = useState('');
@@ -30,6 +32,10 @@ export default function ForgotPasswordPage() {
       }
 
       setMessage(data.message || 'If an account exists with this email address, a password reset link has been dispatched to your inbox.');
+      toast.success(
+        'Password reset link dispatched! Please check your email inbox.',
+        'Reset Instructions Sent'
+      );
     } catch (err) {
       setError(err.message);
     } finally {

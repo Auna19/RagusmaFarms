@@ -1,9 +1,11 @@
 'use client';
 
 import React, { useState } from 'react';
+import { useToast } from '@/context/ToastContext';
 import { Send, CheckCircle2, MessageSquare } from 'lucide-react';
 
 export default function ContactForm({ title = "Send Us a Direct Message", subtitle = "Fill in your inquiry and our farm desk team will reply promptly." }) {
+  const toast = useToast();
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
@@ -26,6 +28,10 @@ export default function ContactForm({ title = "Send Us a Direct Message", subtit
     setTimeout(() => {
       setLoading(false);
       setSubmitted(true);
+      toast.success(
+        'Your message has been sent to our farm desk at Tunga Goro! We will contact you shortly.',
+        'Message Dispatched'
+      );
     }, 600);
   };
 

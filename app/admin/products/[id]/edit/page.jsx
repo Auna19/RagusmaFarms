@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { useRouter, useParams } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
+import { useToast } from '@/context/ToastContext';
 import { 
   ArrowLeft, 
   Upload, 
@@ -17,6 +18,7 @@ import {
 export default function EditProductPage() {
   const router = useRouter();
   const params = useParams();
+  const toast = useToast();
   const { id } = params;
 
   const [categories, setCategories] = useState([]);
@@ -102,6 +104,7 @@ export default function EditProductPage() {
 
       if (data.urls) {
         setImages(prev => [...prev, ...data.urls]);
+        toast.success('Image(s) uploaded successfully!', 'Upload Complete');
       }
     } catch (err) {
       setError(err.message || 'Image upload error');
@@ -156,6 +159,7 @@ export default function EditProductPage() {
       const data = await res.json();
       if (!res.ok) throw new Error(data.error);
 
+      toast.success(`Product "${formData.name}" updated successfully!`, 'Product Updated');
       router.push('/admin/products');
     } catch (err) {
       setError(err.message || 'Failed to update product');
