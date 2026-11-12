@@ -21,18 +21,40 @@ export default function ContactForm({ title = "Send Us a Direct Message", subtit
     setFormData(prev => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    setLoading(true);
+    if (!formData.fullName.trim() || !formData.phone.trim() || !formData.message.trim()) {
+      toast.error('Please fill in your name, phone number, and message.', 'Required Fields');
+      return;
+    }
 
-    setTimeout(() => {
-      setLoading(false);
+    setLoading(true);
+    try {
+      const res = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData)
+      });
+      const data = await res.json();
+
+      if (!res.ok) {
+        throw new Error(data.error || 'Failed to dispatch inquiry');
+      }
+
       setSubmitted(true);
       toast.success(
-        'Your message has been sent to our farm desk at Tunga Goro! We will contact you shortly.',
+        'Your message has been sent to our farm desk at ragusmaa@gmail.com! We will contact you shortly.',
         'Message Dispatched'
       );
-    }, 600);
+    } catch (err) {
+      console.error('Contact form error:', err);
+      toast.error(
+        err.message || 'Unable to dispatch message right now. Please call or WhatsApp us directly.',
+        'Delivery Error'
+      );
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -47,7 +69,7 @@ export default function ContactForm({ title = "Send Us a Direct Message", subtit
           </div>
           <h4 className="text-lg font-serif font-bold text-forest-900">Message Received!</h4>
           <p className="text-sm text-forest-700 max-w-md mx-auto">
-            Thank you, <span className="font-semibold">{formData.fullName}</span>. Your message has been routed to our farm desk at Tunga Goro, Minna. We will contact you at <span className="font-semibold">{formData.phone}</span> shortly.
+            Thank you, <span className="font-semibold">{formData.fullName}</span>. Your message has been routed directly to our farm desk at <span className="font-semibold text-forest-900">ragusmaa@gmail.com</span> (Tunga Goro, Minna). We will contact you at <span className="font-semibold">{formData.phone}</span> shortly.
           </p>
           <button
             type="button"
