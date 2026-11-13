@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import { db } from '@/lib/db';
 import { hashPassword, verifyPasswordResetToken } from '@/lib/auth';
+import { sendPasswordResetSuccessEmail } from '@/lib/email';
 
 export async function POST(req) {
   try {
@@ -34,6 +35,30 @@ export async function POST(req) {
     const passwordHash = await hashPassword(newPassword);
     await db.users.update(user.id, { passwordHash });
 
+    // Determine current base URL for login link
+    const origin = req.headers.get('origin');
+    const host = req.headers.get('host');
+    const proto = req.headers.get('x-forwarded-proto') || 'https';
+    let baseUrl = origin;
+    if (!baseUrl && host) {
+      baseUrl = `${proto}://${host}`;
+    }
+    if (!baseUrl) {
+      baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://ragusma-farms.vercel.app';
+    }
+    const loginUrl = `${baseUrl}/login`;
+
+    // Dispatch security confirmation email with official badge
+    try {
+      await sendPasswordResetSuccessEmail({
+        to: user.email,
+        name: user.fullName,
+        loginUrl
+      });
+    } catch (emailErr) {
+      console.warn('Failed to send password reset confirmation email:', emailErr.message);
+    }
+
     return NextResponse.json({
       success: true,
       message: 'Password reset successful! You can now log in with your new password.'
@@ -43,4 +68,3 @@ export async function POST(req) {
     return NextResponse.json({ error: 'Failed to reset password' }, { status: 500 });
   }
 }
-
